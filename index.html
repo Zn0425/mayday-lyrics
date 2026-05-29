@@ -125,10 +125,6 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
   .wp p{font-size:14px}
 }
 
-.qq-play{position:absolute;right:44px;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.25);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;transition:all .2s}
-.qq-play:hover{background:rgba(212,168,83,0.3);border-color:var(--gold);transform:translateY(-50%) scale(1.1)}
-.qq-play svg{width:14px;height:14px;fill:var(--gold)}
-.sc2{position:relative}
 
 .audio-bar{position:fixed;bottom:0;left:0;right:0;height:56px;background:rgba(6,8,26,0.97);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;padding:0 20px;z-index:200;transform:translateY(100%);transition:transform .3s}
 .audio-bar.show{transform:translateY(0)}
@@ -138,10 +134,9 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 .audio-bar .ab-time{font-size:11px;color:var(--dim);min-width:40px;text-align:center}
 .audio-bar .ab-bar{flex:1;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin:0 8px;cursor:pointer;position:relative}
 .audio-bar .ab-bar .ab-prog{height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width .1s}
-.play-local{position:absolute;right:44px;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.25);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;transition:all .2s}
-.play-local:hover,.play-local.active{background:rgba(212,168,83,0.3);border-color:var(--gold);transform:translateY(-50%) scale(1.1)}
-.play-local svg{width:14px;height:14px;fill:var(--gold)}
-</style>
+.pi.has-audio{cursor:pointer}
+.pi.active svg{fill:var(--gold);animation:pulse 1s infinite}
+
 </head>
 <body>
 <canvas id="sf"></canvas>
@@ -229,12 +224,19 @@ function selectAlbum(idx){
   document.querySelectorAll('.ai').forEach((e,i)=>e.classList.toggle('on',i===idx));
   const mn=document.getElementById('mn');
   const preview=t=>{const l=t.split('\n').filter(x=>x.trim());return l.slice(0,2).join(' · ')};
-  mn.innerHTML='<div class="hr"><div class="hr-bg" style="background:'+a.gradient+';opacity:0.4"></div><div class="hr-c"><div class="lb">專輯</div><h2>'+a.title+'</h2><span class="yb">'+a.year+'</span><span class="sc">'+a.songs.length+' 首歌</span></div></div><div class="ss"><div class="sg">'+a.songs.map((s,i)=>'<div class="sc2" style="--accent:'+a.color+'" data-ai="'+idx+'" data-si="'+i+'"><div class="sn">NO. '+String(i+1).padStart(2,'0')+'</div><div class="st">'+s.title+'</div><div class="ss2">'+preview(s.lyrics)+'</div><div class="pi"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>'+(s.mid?'<a class="qq-play" href="https://y.qq.com/n/ryqq/songDetail/'+s.mid+'" target="_blank" title="在QQ音乐播放" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></a>':'')+'</div>').join('')+'</div></div>';
+  mn.innerHTML='<div class="hr"><div class="hr-bg" style="background:'+a.gradient+';opacity:0.4"></div><div class="hr-c"><div class="lb">專輯</div><h2>'+a.title+'</h2><span class="yb">'+a.year+'</span><span class="sc">'+a.songs.length+' 首歌</span></div></div><div class="ss"><div class="sg">'+a.songs.map((s,i)=>'<div class="sc2" style="--accent:'+a.color+'" data-ai="'+idx+'" data-si="'+i+'"><div class="sn">NO. '+String(i+1).padStart(2,'0')+'</div><div class="st">'+s.title+'</div><div class="ss2">'+preview(s.lyrics)+'</div><div class="pi'+(s.audio?' has-audio':'')+'" data-audio="'+(s.audio||'')+'" data-mid="'+(s.mid||'')+'" data-title="'+s.title.replace(/"/g,'&quot;')+'"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>').join('')+'</div></div>';
   mn.scrollTop=0;
 }
 
 // Song click delegation
 document.getElementById('mn').addEventListener('click',function(e){
+  // Check if play button was clicked
+  const pi=e.target.closest('.pi');
+  if(pi && pi.dataset.audio){
+    e.stopPropagation();
+    playLocal(pi);
+    return;
+  }
   const card=e.target.closest('.sc2');
   if(card)openLyrics(+card.dataset.ai,+card.dataset.si);
 });
@@ -282,32 +284,22 @@ function playLocal(btn) {
     var mid = btn.dataset.mid;
     var title = btn.dataset.title;
     if (!audioFile) {
-        if (mid) { window.open('https://y.qq.com/n/ryqq/songDetail/'+mid, '_blank'); }
-        else { alert('该歌曲暂无音频'); }
+        if (mid) window.open('https://y.qq.com/n/ryqq/songDetail/'+mid,'_blank');
         return;
     }
-    
-    // Toggle if same song
     if (curBtn === btn) {
         if (audio.paused) { audio.play(); btn.classList.add('active'); }
         else { audio.pause(); btn.classList.remove('active'); }
         return;
     }
-    
-    // Stop previous
     if (curBtn) curBtn.classList.remove('active');
-    
-    // Play new
     audio.src = '/mayday-audio/' + encodeURIComponent(audioFile);
     audio.play().catch(function() {
-        // Local audio failed, try QQ Music
-        if (mid) { window.open('https://y.qq.com/n/ryqq/songDetail/'+mid, '_blank'); }
+        if (mid) window.open('https://y.qq.com/n/ryqq/songDetail/'+mid,'_blank');
         btn.classList.remove('active');
     });
     btn.classList.add('active');
     curBtn = btn;
-    
-    // Show audio bar
     document.getElementById('audioBar').classList.add('show');
     document.getElementById('abTitle').textContent = title;
     document.getElementById('abPlay').innerHTML = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
