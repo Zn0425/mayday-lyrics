@@ -292,7 +292,7 @@ function playLocal(btn) {
         return;
     }
     if (curBtn) curBtn.classList.remove('active');
-    audio.src = '/mayday-audio/' + encodeURIComponent(audioFile);
+    audio.src = 'mayday-audio/' + encodeURIComponent(audioFile);
     audio.play().catch(function() {
         if (mid) window.open('https://y.qq.com/n/ryqq/songDetail/'+mid,'_blank');
         btn.classList.remove('active');
