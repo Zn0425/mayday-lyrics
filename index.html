@@ -85,11 +85,15 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 .fav-sidebar.on{color:#e74c3c;border-left-color:#e74c3c;background:rgba(231,76,60,0.08)}
 .fav-sidebar.on svg{fill:#e74c3c;stroke:#e74c3c}
 
-.play-modes{display:flex;gap:8px;margin-top:12px}
-.play-modes button{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.8);font-size:12px;cursor:pointer;touch-action:manipulation;transition:all .2s;backdrop-filter:blur(10px)}
-.play-modes button:hover{background:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.3)}
+.play-modes{display:flex;gap:8px;position:absolute;bottom:40px;right:40px;z-index:2}
+.play-modes button{display:flex;align-items:center;gap:6px;padding:8px 18px;border-radius:20px;border:1px solid rgba(255,255,255,0.4);background:rgba(0,0,0,0.6);color:#fff;font-size:13px;font-weight:600;cursor:pointer;touch-action:manipulation;transition:all .2s;backdrop-filter:blur(10px)}
+.play-modes button:hover{background:rgba(0,0,0,0.8);border-color:rgba(255,255,255,0.6)}
 .play-modes button:active{transform:scale(0.95)}
-.play-modes button svg{width:14px;height:14px;fill:currentColor}
+.play-modes button svg{width:14px;height:14px;fill:#fff}
+@media(max-width:768px){
+  .play-modes{bottom:30px;right:16px}
+  .play-modes button{padding:6px 12px;font-size:12px}
+}
 
 .mo{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0);display:none;align-items:center;justify-content:center;pointer-events:none;transition:background .4s}
 .mo.on{display:flex;background:rgba(0,0,0,0.88);pointer-events:auto}
@@ -1496,7 +1500,7 @@ function showFavSongs(){
     mn.innerHTML='<div class="wp"><div class="wp-icon">❤️</div><h2>還沒有收藏歌曲</h2><p>點擊歌曲卡片右上角的 ♡ 收藏喜歡的歌</p></div>';
     return;
   }
-  mn.innerHTML='<div class="hr"><div class="hr-bg" style="background:linear-gradient(135deg,#1a0a0a,#2a1a1a,#3a1a1a,#4a2a2a)"></div><div class="hr-c"><div class="lb">收藏</div><h2>我的收藏</h2><span class="sc">'+songs.length+' 首歌</span>'+playBtnsHTML('fav',0)+'</div></div><div class="ss"><div class="sg">'+songs.map((item,i)=>{
+  mn.innerHTML='<div class="hr"><div class="hr-bg" style="background:linear-gradient(135deg,#1a0a0a,#2a1a1a,#3a1a1a,#4a2a2a)"></div><div class="hr-c"><div class="lb">收藏</div><h2>我的收藏</h2><span class="sc">'+songs.length+' 首歌</span></div>'+playBtnsHTML('fav',0)+'</div><div class="ss"><div class="sg">'+songs.map((item,i)=>{
     const {s,ai,si,color}=item;
     return '<div class="sc2" style="--accent:'+color+'" data-ai="'+ai+'" data-si="'+si+'"><button class="fav on" data-fai="'+ai+'" data-fsi="'+si+'"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button><div class="sn">NO. '+String(i+1).padStart(2,'0')+'</div><div class="st">'+s.title+'</div><div class="ss2">'+(s.lyricist?'词：'+s.lyricist+' / 曲：'+s.composer:'')+'</div><div class="pi'+(s.audio?' has-audio':'')+'" data-audio="'+(s.audio||'')+'" data-mid="'+(s.mid||'')+'" data-title="'+s.title.replace(/"/g,'&quot;')+'"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>';
   }).join('')+'</div></div>';
@@ -1527,8 +1531,8 @@ function selectAlbum(idx){
   const sgHTML=a.songs.map((s,i)=>songCardHTML(s,idx,i,a)).join('');
   const pmHTML=playBtnsHTML('album',idx);
   mn.innerHTML=a.cover
-    ?'<div class="hr"><div class="hr-cover" style="background-image:url('+a.cover+')"></div><div class="hr-c"><div class="lb">專輯</div><h2>'+a.title+'</h2><span class="yb">'+a.year+'</span><span class="sc">'+a.songs.length+' 首歌</span>'+pmHTML+'</div></div><div class="ss"><div class="sg">'+sgHTML+'</div></div>'
-    :'<div class="hr"><div class="hr-bg" style="background:'+a.gradient+'"></div><div class="hr-c"><div class="lb">專輯</div><h2>'+a.title+'</h2><span class="yb">'+a.year+'</span><span class="sc">'+a.songs.length+' 首歌</span>'+pmHTML+'</div></div><div class="ss"><div class="sg">'+sgHTML+'</div></div>';
+    ?'<div class="hr"><div class="hr-cover" style="background-image:url('+a.cover+')"></div><div class="hr-c"><div class="lb">專輯</div><h2>'+a.title+'</h2><span class="yb">'+a.year+'</span><span class="sc">'+a.songs.length+' 首歌</span></div>'+pmHTML+'</div><div class="ss"><div class="sg">'+sgHTML+'</div></div>'
+    :'<div class="hr"><div class="hr-bg" style="background:'+a.gradient+'"></div><div class="hr-c"><div class="lb">專輯</div><h2>'+a.title+'</h2><span class="yb">'+a.year+'</span><span class="sc">'+a.songs.length+' 首歌</span></div>'+pmHTML+'</div><div class="ss"><div class="sg">'+sgHTML+'</div></div>';
   mn.scrollTop=0;
 }
 
