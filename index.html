@@ -73,8 +73,8 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 .sc2 .pi{position:absolute;bottom:20px;right:20px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center}
 .pi svg{width:14px;height:14px;fill:#fff;margin-left:2px}
 
-.mo{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;pointer-events:none;transition:background .4s}
-.mo.on{background:rgba(0,0,0,0.88);pointer-events:auto}
+.mo{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0);display:none;align-items:center;justify-content:center;pointer-events:none;transition:background .4s}
+.mo.on{display:flex;background:rgba(0,0,0,0.88);pointer-events:auto}
 .md{width:90%;max-width:640px;max-height:85vh;background:rgba(12,14,30,0.96);backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,0.08);border-radius:20px;overflow:hidden;opacity:0;transform:translateY(40px) scale(0.95);transition:all .4s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column}
 .mo.on .md{opacity:1;transform:translateY(0) scale(1)}
 .mh{position:relative;padding:40px 40px 30px;overflow:hidden;flex-shrink:0}
