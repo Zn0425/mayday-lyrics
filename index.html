@@ -14,8 +14,8 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 .app{display:flex;height:100vh;height:100dvh;position:relative;overflow:hidden}
 
 .mbtn{display:none;position:fixed;top:14px;left:14px;width:44px;height:44px;background:rgba(6,8,26,0.92);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:12px;z-index:301;cursor:pointer;align-items:center;justify-content:center;padding:0;touch-action:manipulation}
-.mbtn svg{width:28px;height:28px}
-.mbtn .lp{stroke:var(--gold);stroke-width:2.5;stroke-linecap:round;fill:none;transition:stroke .3s}
+.mbtn svg{width:30px;height:30px}
+.mbtn .lp{stroke:var(--gold);stroke-width:3;stroke-linecap:round;fill:none;transition:stroke .3s}
 .mbtn.on .lp{stroke:rgba(255,255,255,0.9)}
 
 .ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0);z-index:99;transition:background .3s;pointer-events:none}
@@ -1462,7 +1462,7 @@ const sb=document.getElementById('sb'),ov=document.getElementById('ov'),mb=docum
 let sbOpen=false;
 var logoPaths={
   h:[[12,15,32,15],[12,15,32,15],[12,22,32,22],[12,22,32,22],[12,29,32,29],[12,29,32,29],[12,22,32,22],[12,22,32,22]],
-  l:[[22,4,8,18],[22,4,36,18],[8,18,8,38],[36,18,36,38],[8,18,22,32],[36,18,22,32],[8,38,22,38],[36,38,22,38]]
+  l:[[22,3,6,17],[22,3,38,17],[6,17,6,38],[38,17,38,38],[6,17,22,30],[38,17,22,30],[6,38,22,41],[38,38,22,41]]
 };
 function morphLogo(toLogo){
   var ps=mb.querySelectorAll('.lp');
