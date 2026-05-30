@@ -53,14 +53,14 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 
 .hr{position:relative;padding:60px 40px 40px;overflow:hidden;min-height:400px;display:flex;align-items:flex-end}
 .hr-bg{position:absolute;inset:0;transition:all .8s ease}
-.hr-cover{position:absolute;inset:0;background-size:cover;background-position:center;transition:all .8s ease;z-index:0}
+.hr-cover{position:absolute;inset:0;background-size:cover;background-position:var(--cpos,center);transition:all .8s ease;z-index:0}
 .hr-cover::before{content:'';position:absolute;top:0;left:0;right:0;height:60px;background:linear-gradient(rgba(10,10,20,0.5),transparent);z-index:1}
-.hr-cover::after{content:'';position:absolute;bottom:0;left:0;right:0;height:50%;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);-webkit-mask-image:linear-gradient(transparent 0%,rgba(0,0,0,0.3) 40%,rgba(0,0,0,0.7) 70%,black 100%);mask-image:linear-gradient(transparent 0%,rgba(0,0,0,0.3) 40%,rgba(0,0,0,0.7) 70%,black 100%);z-index:1}
+.hr-cover::after{content:'';position:absolute;bottom:0;left:0;right:0;height:35%;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);-webkit-mask-image:linear-gradient(transparent 0%,rgba(0,0,0,0.3) 40%,rgba(0,0,0,0.7) 70%,black 100%);mask-image:linear-gradient(transparent 0%,rgba(0,0,0,0.3) 40%,rgba(0,0,0,0.7) 70%,black 100%);z-index:1}
 .hr-c{position:relative;z-index:1}
 .hr-c .lb{font-size:13px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;opacity:0;transform:translateY(20px);animation:fiu .6s .2s forwards}
 .hr-c h2{font-size:42px;font-weight:700;letter-spacing:2px;line-height:1.3;color:#fff;text-shadow:0 2px 30px rgba(0,0,0,0.8),0 0 60px rgba(0,0,0,0.5);margin-bottom:8px;opacity:0;transform:translateY(20px);animation:fiu .6s .35s forwards}
-.hr-c .yb{display:inline-block;padding:5px 16px;background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:20px;font-size:14px;font-weight:500;letter-spacing:2px;color:rgba(255,255,255,0.9);text-shadow:0 1px 4px rgba(0,0,0,0.4);opacity:0;transform:translateY(20px);animation:fiu .6s .5s forwards}
-.hr-c .sc{display:inline-block;margin-left:10px;padding:5px 16px;background:rgba(212,168,83,0.2);border:1px solid rgba(212,168,83,0.3);border-radius:20px;font-size:14px;font-weight:500;letter-spacing:1px;color:var(--gold);text-shadow:0 1px 4px rgba(0,0,0,0.3);opacity:0;transform:translateY(20px);animation:fiu .6s .6s forwards}
+.hr-c .yb{display:inline-block;padding:4px 12px;background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:20px;font-size:12px;font-weight:500;letter-spacing:2px;color:rgba(255,255,255,0.9);text-shadow:0 1px 4px rgba(0,0,0,0.4);opacity:0;transform:translateY(20px);animation:fiu .6s .5s forwards}
+.hr-c .sc{display:inline-block;margin-left:8px;padding:4px 12px;background:rgba(212,168,83,0.2);border:1px solid rgba(212,168,83,0.3);border-radius:20px;font-size:12px;font-weight:500;letter-spacing:1px;color:var(--gold);text-shadow:0 1px 4px rgba(0,0,0,0.3);opacity:0;transform:translateY(20px);animation:fiu .6s .6s forwards}
 .hr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(transparent,rgba(10,10,20,0.85));pointer-events:none;z-index:1}
 @keyframes fiu{to{opacity:1;transform:translateY(0)}}
 
@@ -307,6 +307,7 @@ const A=[
   {
     "title": "愛情萬歲",
     "cover": "covers/02.jpg",
+    "coverPos": "center 20%",
     "year": "2000",
     "gradient": "linear-gradient(135deg,#1a0a2e,#2d1b4e,#4a2c7a,#7b4fb8)",
     "color": "#7b4fb8",
@@ -607,6 +608,7 @@ const A=[
   {
     "title": "神的孩子都在跳舞",
     "cover": "covers/05.jpg",
+    "coverPos": "30% center",
     "year": "2004",
     "gradient": "linear-gradient(135deg,#2a0a0a,#4a1a1a,#6a2a2a,#8a3a3a)",
     "color": "#8a3a3a",
@@ -1531,7 +1533,7 @@ function selectAlbum(idx){
   const sgHTML=a.songs.map((s,i)=>songCardHTML(s,idx,i,a)).join('');
   const pmHTML=playBtnsHTML('album',idx);
   mn.innerHTML=a.cover
-    ?'<div class="hr"><div class="hr-cover" style="background-image:url('+a.cover+')"></div><div class="hr-c"><div class="lb">專輯</div><h2>'+a.title+'</h2><span class="yb">'+a.year+'</span><span class="sc">'+a.songs.length+' 首歌</span></div>'+pmHTML+'</div><div class="ss"><div class="sg">'+sgHTML+'</div></div>'
+    ?'<div class="hr"><div class="hr-cover" style="background-image:url('+a.cover+')'+(a.coverPos?';--cpos:'+a.coverPos:'')+'"></div><div class="hr-c"><div class="lb">專輯</div><h2>'+a.title+'</h2><span class="yb">'+a.year+'</span><span class="sc">'+a.songs.length+' 首歌</span></div>'+pmHTML+'</div><div class="ss"><div class="sg">'+sgHTML+'</div></div>'
     :'<div class="hr"><div class="hr-bg" style="background:'+a.gradient+'"></div><div class="hr-c"><div class="lb">專輯</div><h2>'+a.title+'</h2><span class="yb">'+a.year+'</span><span class="sc">'+a.songs.length+' 首歌</span></div>'+pmHTML+'</div><div class="ss"><div class="sg">'+sgHTML+'</div></div>';
   mn.scrollTop=0;
 }
