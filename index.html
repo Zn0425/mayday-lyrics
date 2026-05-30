@@ -1406,25 +1406,25 @@ const A=[
         "composer": "阿信"
       }
     ]
-  }
-];;
+  ];
+  ;
 
-// Stars
-(function(){
-  const c=document.getElementById('sf'),x=c.getContext('2d');let s=[];
-  function r(){c.width=innerWidth;c.height=innerHeight}
-  function mk(){s=[];for(let i=0;i<150;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.5+0.3,a:Math.random(),da:(Math.random()-.5)*.015,c:Math.random()>.7?'rgba(212,168,83,':'rgba(200,210,230,'})}
-  function d(){x.clearRect(0,0,c.width,c.height);for(const i of s){i.a+=i.da;if(i.a>1||i.a<.1)i.da*=-1;x.beginPath();x.arc(i.x,i.y,i.r,0,Math.PI*2);x.fillStyle=i.c+i.a+')';x.fill()}requestAnimationFrame(d)}
-  r();mk();d();addEventListener('resize',()=>{r();mk()})
-})();
+  // Sidebar (defined BEFORE stars so it always exists even if canvas fails)
+  const sb=document.getElementById('sb'),ov=document.getElementById('ov'),mb=document.getElementById('mb');
+  let sbOpen=false;
+  function toggleSB(){sbOpen=!sbOpen;sb.classList.toggle('open',sbOpen);ov.classList.toggle('show',sbOpen);mb.classList.toggle('on',sbOpen)}
+  function closeSB(){if(sbOpen)toggleSB()}
+  mb.addEventListener('click',toggleSB);
+  ov.addEventListener('click',closeSB);
 
-// Sidebar
-const sb=document.getElementById('sb'),ov=document.getElementById('ov'),mb=document.getElementById('mb');
-let sbOpen=false;
-function toggleSB(){sbOpen=!sbOpen;sb.classList.toggle('open',sbOpen);ov.classList.toggle('show',sbOpen);mb.classList.toggle('on',sbOpen)}
-function closeSB(){if(sbOpen)toggleSB()}
-mb.addEventListener('click',toggleSB);
-ov.addEventListener('click',closeSB);
+  // Stars (wrapped in try-catch so canvas errors never break sidebar)
+  try{(function(){
+    const c=document.getElementById('sf');if(!c)return;const x=c.getContext('2d');let s=[];
+    function r(){c.width=innerWidth;c.height=innerHeight}
+    function mk(){s=[];for(let i=0;i<150;i++)s.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.5+0.3,a:Math.random(),da:(Math.random()-.5)*.015,c:Math.random()>.7?'rgba(212,168,83,':'rgba(200,210,230,'})}
+    function d(){x.clearRect(0,0,c.width,c.height);for(const i of s){i.a+=i.da;if(i.a>1||i.a<.1)i.da*=-1;x.beginPath();x.arc(i.x,i.y,i.r,0,Math.PI*2);x.fillStyle=i.c+i.a+')';x.fill()}requestAnimationFrame(d)}
+    r();mk();d();addEventListener('resize',()=>{r();mk()})
+  })()}catch(e){console.warn('Stars skipped:',e)}
 
 // Album list
 const alEl=document.getElementById('al');
