@@ -161,10 +161,9 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 <body>
 <canvas id="sf"></canvas>
 <button class="mbtn" id="mb"><svg viewBox="0 0 44 44">
-<path class="lp" d="M12,15 L32,15"/><path class="lp" d="M12,15 L32,15"/><path class="lp" d="M12,15 L32,15"/>
-<path class="lp" d="M12,22 L32,22"/><path class="lp" d="M12,22 L32,22"/><path class="lp" d="M12,22 L32,22"/>
-<path class="lp" d="M12,29 L32,29"/><path class="lp" d="M12,29 L32,29"/><path class="lp" d="M12,29 L32,29"/>
-<path class="lp" d="M12,22 L32,22"/><path class="lp" d="M12,22 L32,22"/>
+<path class="lp" d="M12,15 L32,15"/><path class="lp" d="M12,15 L32,15"/><path class="lp" d="M12,15 L32,15"/><path class="lp" d="M12,15 L32,15"/>
+<path class="lp" d="M12,22 L32,22"/><path class="lp" d="M12,22 L32,22"/><path class="lp" d="M12,22 L32,22"/><path class="lp" d="M12,22 L32,22"/>
+<path class="lp" d="M12,29 L32,29"/><path class="lp" d="M12,29 L32,29"/><path class="lp" d="M12,29 L32,29"/><path class="lp" d="M12,29 L32,29"/>
 </svg></button>
 <div class="ov" id="ov"></div>
 
@@ -1461,8 +1460,8 @@ const A=[
 const sb=document.getElementById('sb'),ov=document.getElementById('ov'),mb=document.getElementById('mb');
 let sbOpen=false;
 var logoPaths={
-  h:[[12,15,32,15],[12,15,32,15],[12,15,32,15],[12,22,32,22],[12,22,32,22],[12,22,32,22],[12,29,32,29],[12,29,32,29],[12,29,32,29],[12,22,32,22],[12,22,32,22]],
-  l:[[3,9,3,39],[41,9,41,39],[3,9,22,2],[41,9,22,2],[22,2,12,39],[22,2,32,39],[3,9,12,32],[41,9,32,32],[12,32,12,39],[32,32,32,39],[12,32,32,32]]
+  h:[[12,15,32,15],[12,15,32,15],[12,15,32,15],[12,15,32,15],[12,22,32,22],[12,22,32,22],[12,22,32,22],[12,22,32,22],[12,29,32,29],[12,29,32,29],[12,29,32,29],[12,29,32,29]],
+  l:[[3,9,3,39],[41,9,41,39],[3,9,22,2],[41,9,22,2],[22,2,22,39],[3,39,41,39],[3,39,22,18],[41,39,22,18],[3,9,32,30],[41,9,12,30],[12,30,22,39],[32,30,22,39]]
 };
 function morphLogo(toLogo){
   var ps=mb.querySelectorAll('.lp');
