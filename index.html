@@ -13,11 +13,18 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 
 .app{display:flex;height:100vh;height:100dvh;position:relative;overflow:hidden}
 
-.mbtn{display:none;position:fixed;top:14px;left:14px;width:44px;height:44px;background:rgba(6,8,26,0.92);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:12px;z-index:301;cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:5px;padding:12px;touch-action:manipulation}
-.mbtn span{display:block;width:20px;height:2px;background:var(--gold);border-radius:2px;transition:all .3s}
-.mbtn.on span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
-.mbtn.on span:nth-child(2){opacity:0}
-.mbtn.on span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+.mbtn{display:none;position:fixed;top:14px;left:14px;width:44px;height:44px;background:rgba(6,8,26,0.92);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:12px;z-index:301;cursor:pointer;align-items:center;justify-content:center;padding:0;touch-action:manipulation}
+.mbtn svg{width:28px;height:28px}
+.mbtn .lp{stroke:var(--gold);stroke-width:2;stroke-linecap:round;fill:none;transition:d .4s cubic-bezier(.4,0,.2,1)}
+.mbtn .lp:nth-child(1){d:path("M12,15 L32,15")}
+.mbtn .lp:nth-child(2){d:path("M12,15 L32,15")}
+.mbtn .lp:nth-child(3){d:path("M12,22 L32,22")}
+.mbtn .lp:nth-child(4){d:path("M12,22 L32,22")}
+.mbtn .lp:nth-child(5){d:path("M12,29 L32,29")}
+.mbtn .lp:nth-child(6){d:path("M12,29 L32,29")}
+.mbtn .lp:nth-child(7){d:path("M12,22 L32,22")}
+.mbtn .lp:nth-child(8){d:path("M12,22 L32,22")}
+.mbtn.on .lp{stroke:rgba(255,255,255,0.9)}
 
 .ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0);z-index:99;transition:background .3s;pointer-events:none}
 .ov.show{background:rgba(0,0,0,0.6);pointer-events:auto}
@@ -161,7 +168,12 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 </head>
 <body>
 <canvas id="sf"></canvas>
-<button class="mbtn" id="mb"><span></span><span></span><span></span></button>
+<button class="mbtn" id="mb"><svg viewBox="0 0 44 44">
+<path class="lp" d="M12,15 L32,15"/><path class="lp" d="M12,15 L32,15"/>
+<path class="lp" d="M12,22 L32,22"/><path class="lp" d="M12,22 L32,22"/>
+<path class="lp" d="M12,29 L32,29"/><path class="lp" d="M12,29 L32,29"/>
+<path class="lp" d="M12,22 L32,22"/><path class="lp" d="M12,22 L32,22"/>
+</svg></button>
 <div class="ov" id="ov"></div>
 
 <div class="app">
@@ -1456,7 +1468,11 @@ const A=[
 // Sidebar
 const sb=document.getElementById('sb'),ov=document.getElementById('ov'),mb=document.getElementById('mb');
 let sbOpen=false;
-function toggleSB(){sbOpen=!sbOpen;sb.classList.toggle('open',sbOpen);ov.classList.toggle('show',sbOpen);mb.classList.toggle('on',sbOpen)}
+function toggleSB(){sbOpen=!sbOpen;sb.classList.toggle('open',sbOpen);ov.classList.toggle('show',sbOpen);mb.classList.toggle('on',sbOpen);
+var ps=mb.querySelectorAll('.lp');
+if(sbOpen){var L=['path("M22,3 L15,15")','path("M22,3 L29,15")','path("M11,15 L11,35")','path("M33,15 L33,35")','path("M11,35 L22,41")','path("M33,35 L22,41")','path("M15,15 L22,41")','path("M29,15 L22,41")'];ps.forEach(function(p,i){p.style.d=L[i]})}
+else{var H=['path("M12,15 L32,15")','path("M12,15 L32,15")','path("M12,22 L32,22")','path("M12,22 L32,22")','path("M12,29 L32,29")','path("M12,29 L32,29")','path("M12,22 L32,22")','path("M12,22 L32,22")'];ps.forEach(function(p,i){p.style.d=H[i]})}
+}
 function closeSB(){if(sbOpen)toggleSB()}
 mb.addEventListener('click',toggleSB);
 ov.addEventListener('click',closeSB);
