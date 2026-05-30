@@ -76,7 +76,7 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 .sc2 .pi{position:absolute;bottom:20px;right:20px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center}
 .pi svg{width:14px;height:14px;fill:#fff;margin-left:2px}
 
-.sc2 .fav{position:absolute;top:18px;right:18px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;padding:0;touch-action:manipulation;transition:all .2s;z-index:2}
+.sc2 .fav{position:absolute;bottom:20px;right:64px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;padding:0;touch-action:manipulation;transition:all .2s;z-index:2}
 .sc2 .fav svg{width:16px;height:16px;fill:none;stroke:rgba(255,255,255,0.4);stroke-width:2;transition:all .2s}
 .sc2 .fav.on svg{fill:#e74c3c;stroke:#e74c3c}
 .sc2 .fav:active{transform:scale(1.2)}
@@ -1527,13 +1527,10 @@ function selectAlbum(idx){
 
 // Song click delegation
 document.getElementById('mn').addEventListener('click',function(e){
-  // Check if play button was clicked
+  // Check if play button or fav button was clicked
   const pi=e.target.closest('.pi');
-  if(pi && pi.dataset.audio){
-    e.stopPropagation();
-    playLocal(pi);
-    return;
-  }
+  if(pi&&pi.dataset.audio){playLocal(pi);return}
+  if(e.target.closest('.fav'))return;
   const card=e.target.closest('.sc2');
   if(card)openLyrics(+card.dataset.ai,+card.dataset.si);
 });
@@ -1553,6 +1550,22 @@ document.getElementById('mx').addEventListener('click',closeLyrics);
 document.getElementById('mo').addEventListener('click',function(e){if(e.target===this)closeLyrics()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLyrics()});
 
+// Scroll to song and highlight
+function scrollToSong(ai,si){
+  const mn=document.getElementById('mn');
+  const cards=mn.querySelectorAll('.sc2');
+  for(const c of cards){
+    if(+c.dataset.ai===ai&&+c.dataset.si===si){
+      c.scrollIntoView({behavior:'smooth',block:'center'});
+      c.style.transition='box-shadow .3s, border-color .3s';
+      c.style.boxShadow='0 0 20px rgba(212,168,83,0.4)';
+      c.style.borderColor='rgba(212,168,83,0.6)';
+      setTimeout(()=>{c.style.boxShadow='';c.style.borderColor=''},2000);
+      break;
+    }
+  }
+}
+
 // Search
 const si=document.getElementById('si'),srl=document.getElementById('srl');
 const allS=[];A.forEach((a,ai)=>a.songs.forEach((s,si)=>allS.push({ai,si,t:s.title,al:a.title})));
@@ -1565,7 +1578,7 @@ si.addEventListener('input',function(){
 });
 srl.addEventListener('click',function(e){
   const item=e.target.closest('.sri');
-  if(item&&item.dataset.ai!==undefined){selectAlbum(+item.dataset.ai);si.value='';srl.classList.remove('show');closeSB();setTimeout(()=>openLyrics(+item.dataset.ai,+item.dataset.si),200)}
+  if(item&&item.dataset.ai!==undefined){selectAlbum(+item.dataset.ai);si.value='';srl.classList.remove('show');closeSB();setTimeout(()=>scrollToSong(+item.dataset.ai,+item.dataset.si),200)}
 });
 si.addEventListener('blur',function(){setTimeout(()=>srl.classList.remove('show'),200)});
 
