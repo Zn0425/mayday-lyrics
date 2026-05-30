@@ -59,8 +59,8 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 .hr-c{position:relative;z-index:1}
 .hr-c .lb{font-size:13px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;opacity:0;transform:translateY(20px);animation:fiu .6s .2s forwards}
 .hr-c h2{font-size:42px;font-weight:700;letter-spacing:2px;line-height:1.3;color:#fff;text-shadow:0 2px 30px rgba(0,0,0,0.8),0 0 60px rgba(0,0,0,0.5);margin-bottom:8px;opacity:0;transform:translateY(20px);animation:fiu .6s .35s forwards}
-.hr-c .yb{display:inline-block;padding:4px 14px;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.15);border-radius:20px;font-size:13px;letter-spacing:2px;color:rgba(255,255,255,0.7);opacity:0;transform:translateY(20px);animation:fiu .6s .5s forwards}
-.hr-c .sc{display:inline-block;margin-left:10px;padding:4px 14px;background:rgba(212,168,83,0.15);border:1px solid rgba(212,168,83,0.2);border-radius:20px;font-size:13px;letter-spacing:1px;color:var(--gold);opacity:0;transform:translateY(20px);animation:fiu .6s .6s forwards}
+.hr-c .yb{display:inline-block;padding:5px 16px;background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:20px;font-size:14px;font-weight:500;letter-spacing:2px;color:rgba(255,255,255,0.9);text-shadow:0 1px 4px rgba(0,0,0,0.4);opacity:0;transform:translateY(20px);animation:fiu .6s .5s forwards}
+.hr-c .sc{display:inline-block;margin-left:10px;padding:5px 16px;background:rgba(212,168,83,0.2);border:1px solid rgba(212,168,83,0.3);border-radius:20px;font-size:14px;font-weight:500;letter-spacing:1px;color:var(--gold);text-shadow:0 1px 4px rgba(0,0,0,0.3);opacity:0;transform:translateY(20px);animation:fiu .6s .6s forwards}
 .hr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(transparent,rgba(10,10,20,0.85));pointer-events:none;z-index:1}
 @keyframes fiu{to{opacity:1;transform:translateY(0)}}
 
@@ -85,14 +85,14 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 .fav-sidebar.on{color:#e74c3c;border-left-color:#e74c3c;background:rgba(231,76,60,0.08)}
 .fav-sidebar.on svg{fill:#e74c3c;stroke:#e74c3c}
 
-.play-modes{display:flex;gap:8px;position:absolute;bottom:40px;right:40px;z-index:2}
-.play-modes button{display:flex;align-items:center;gap:6px;padding:8px 18px;border-radius:20px;border:1px solid rgba(255,255,255,0.4);background:rgba(0,0,0,0.6);color:#fff;font-size:13px;font-weight:600;cursor:pointer;touch-action:manipulation;transition:all .2s;backdrop-filter:blur(10px)}
-.play-modes button:hover{background:rgba(0,0,0,0.8);border-color:rgba(255,255,255,0.6)}
+.play-modes{display:flex;gap:6px;position:absolute;bottom:40px;right:40px;z-index:2}
+.play-modes button{display:flex;align-items:center;gap:4px;padding:5px 12px;border-radius:16px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);font-size:12px;font-weight:500;cursor:pointer;touch-action:manipulation;transition:all .2s;backdrop-filter:blur(10px)}
+.play-modes button:hover{background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.9);border-color:rgba(255,255,255,0.25)}
 .play-modes button:active{transform:scale(0.95)}
-.play-modes button svg{width:14px;height:14px;fill:#fff}
+.play-modes button svg{width:12px;height:12px;fill:currentColor}
 @media(max-width:768px){
   .play-modes{bottom:30px;right:16px}
-  .play-modes button{padding:6px 12px;font-size:12px}
+  .play-modes button{padding:4px 10px;font-size:11px}
 }
 
 .mo{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0);display:none;align-items:center;justify-content:center;pointer-events:none;transition:background .4s}
@@ -1610,7 +1610,8 @@ function playFromPlaylist(idx){
   if(idx<0||idx>=playlist.length)return;
   playlistIdx=idx;
   const {ai,si}=playlist[idx];
-  const btn=document.querySelector('.pi[data-ai="'+ai+'"][data-si="'+si+'"]');
+  const card=document.querySelector('.sc2[data-ai="'+ai+'"][data-si="'+si+'"]');
+  const btn=card?card.querySelector('.pi'):null;
   if(btn)playLocal(btn);
 }
 function playNext(){
