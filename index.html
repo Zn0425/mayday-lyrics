@@ -13,10 +13,8 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 
 .app{display:flex;height:100vh;height:100dvh;position:relative;overflow:hidden}
 
-.mbtn{display:none;position:fixed;top:14px;left:14px;width:44px;height:44px;background:rgba(6,8,26,0.92);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:12px;z-index:301;cursor:pointer;align-items:center;justify-content:center;padding:0;touch-action:manipulation}
-.mbtn svg{width:30px;height:30px}
-.mbtn .lp{stroke:var(--gold);stroke-width:3;stroke-linecap:round;fill:none;transition:stroke .3s}
-.mbtn.on .lp{stroke:rgba(255,255,255,0.9)}
+.mbtn{display:none;position:fixed;top:14px;left:14px;width:44px;height:44px;background:rgba(6,8,26,0.92);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.1);border-radius:12px;z-index:301;cursor:pointer;align-items:center;justify-content:center;padding:7px;touch-action:manipulation}
+.mbtn svg{display:block}
 
 .ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0);z-index:99;transition:background .3s;pointer-events:none}
 .ov.show{background:rgba(0,0,0,0.6);pointer-events:auto}
@@ -52,14 +50,14 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 
 .hr{position:relative;padding:60px 40px 40px;overflow:hidden;min-height:400px;display:flex;align-items:flex-end}
 .hr-bg{position:absolute;inset:0;transition:all .8s ease}
-.hr-cover{position:absolute;inset:0;background-size:cover;background-position:var(--cpos,center);transition:all .8s ease;z-index:0}
+.hr-cover{position:absolute;inset:0;background-size:cover;background-position:center;transition:all .8s ease;z-index:0}
 .hr-cover::before{content:'';position:absolute;top:0;left:0;right:0;height:60px;background:linear-gradient(rgba(10,10,20,0.5),transparent);z-index:1}
-.hr-cover::after{content:'';position:absolute;bottom:0;left:0;right:0;height:35%;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);-webkit-mask-image:linear-gradient(transparent 0%,rgba(0,0,0,0.3) 40%,rgba(0,0,0,0.7) 70%,black 100%);mask-image:linear-gradient(transparent 0%,rgba(0,0,0,0.3) 40%,rgba(0,0,0,0.7) 70%,black 100%);z-index:1}
+.hr-cover::after{content:'';position:absolute;bottom:0;left:0;right:0;height:50%;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);-webkit-mask-image:linear-gradient(transparent 0%,rgba(0,0,0,0.3) 40%,rgba(0,0,0,0.7) 70%,black 100%);mask-image:linear-gradient(transparent 0%,rgba(0,0,0,0.3) 40%,rgba(0,0,0,0.7) 70%,black 100%);z-index:1}
 .hr-c{position:relative;z-index:1}
 .hr-c .lb{font-size:13px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;opacity:0;transform:translateY(20px);animation:fiu .6s .2s forwards}
 .hr-c h2{font-size:42px;font-weight:700;letter-spacing:2px;line-height:1.3;color:#fff;text-shadow:0 2px 30px rgba(0,0,0,0.8),0 0 60px rgba(0,0,0,0.5);margin-bottom:8px;opacity:0;transform:translateY(20px);animation:fiu .6s .35s forwards}
-.hr-c .yb{display:inline-block;padding:4px 12px;background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);border-radius:20px;font-size:12px;font-weight:500;letter-spacing:2px;color:rgba(255,255,255,0.9);text-shadow:0 1px 4px rgba(0,0,0,0.4);opacity:0;transform:translateY(20px);animation:fiu .6s .5s forwards}
-.hr-c .sc{display:inline-block;margin-left:8px;padding:4px 12px;background:rgba(212,168,83,0.2);border:1px solid rgba(212,168,83,0.3);border-radius:20px;font-size:12px;font-weight:500;letter-spacing:1px;color:var(--gold);text-shadow:0 1px 4px rgba(0,0,0,0.3);opacity:0;transform:translateY(20px);animation:fiu .6s .6s forwards}
+.hr-c .yb{display:inline-block;padding:4px 14px;background:rgba(255,255,255,0.1);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.15);border-radius:20px;font-size:13px;letter-spacing:2px;color:rgba(255,255,255,0.7);opacity:0;transform:translateY(20px);animation:fiu .6s .5s forwards}
+.hr-c .sc{display:inline-block;margin-left:10px;padding:4px 14px;background:rgba(212,168,83,0.15);border:1px solid rgba(212,168,83,0.2);border-radius:20px;font-size:13px;letter-spacing:1px;color:var(--gold);opacity:0;transform:translateY(20px);animation:fiu .6s .6s forwards}
 .hr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(transparent,rgba(10,10,20,0.85));pointer-events:none;z-index:1}
 @keyframes fiu{to{opacity:1;transform:translateY(0)}}
 
@@ -84,14 +82,14 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 .fav-sidebar.on{color:#e74c3c;border-left-color:#e74c3c;background:rgba(231,76,60,0.08)}
 .fav-sidebar.on svg{fill:#e74c3c;stroke:#e74c3c}
 
-.play-modes{display:flex;gap:6px;position:absolute;bottom:40px;right:40px;z-index:2}
-.play-modes button{display:flex;align-items:center;gap:4px;padding:5px 12px;border-radius:16px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);font-size:12px;font-weight:500;cursor:pointer;touch-action:manipulation;transition:all .2s;backdrop-filter:blur(10px)}
-.play-modes button:hover{background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.9);border-color:rgba(255,255,255,0.25)}
+.play-modes{display:flex;gap:8px;position:absolute;bottom:40px;right:40px;z-index:2}
+.play-modes button{display:flex;align-items:center;gap:6px;padding:8px 18px;border-radius:20px;border:1px solid rgba(255,255,255,0.4);background:rgba(0,0,0,0.6);color:#fff;font-size:13px;font-weight:600;cursor:pointer;touch-action:manipulation;transition:all .2s;backdrop-filter:blur(10px)}
+.play-modes button:hover{background:rgba(0,0,0,0.8);border-color:rgba(255,255,255,0.6)}
 .play-modes button:active{transform:scale(0.95)}
-.play-modes button svg{width:12px;height:12px;fill:currentColor}
+.play-modes button svg{width:14px;height:14px;fill:#fff}
 @media(max-width:768px){
   .play-modes{bottom:30px;right:16px}
-  .play-modes button{padding:4px 10px;font-size:11px}
+  .play-modes button{padding:6px 12px;font-size:12px}
 }
 
 .mo{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0);display:none;align-items:center;justify-content:center;pointer-events:none;transition:background .4s}
@@ -160,11 +158,7 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 </head>
 <body>
 <canvas id="sf"></canvas>
-<button class="mbtn" id="mb"><svg viewBox="0 0 44 44">
-<path class="lp" d="M12,15 L32,15"/><path class="lp" d="M12,15 L32,15"/><path class="lp" d="M12,15 L32,15"/><path class="lp" d="M12,15 L32,15"/>
-<path class="lp" d="M12,22 L32,22"/><path class="lp" d="M12,22 L32,22"/><path class="lp" d="M12,22 L32,22"/><path class="lp" d="M12,22 L32,22"/>
-<path class="lp" d="M12,29 L32,29"/><path class="lp" d="M12,29 L32,29"/><path class="lp" d="M12,29 L32,29"/><path class="lp" d="M12,29 L32,29"/>
-</svg></button>
+<button class="mbtn" id="mb"><svg id="menuIcon" viewBox="0 0 30 30" width="30" height="30"><path id="cp0" d="M5,9 L10,9" stroke="#d4a843" stroke-width="1.8" stroke-linecap="round" fill="none"/><path id="cp1" d="M10,9 L15,9" stroke="#d4a843" stroke-width="1.8" stroke-linecap="round" fill="none"/><path id="cp2" d="M15,9 L20,9" stroke="#d4a843" stroke-width="1.8" stroke-linecap="round" fill="none"/><path id="cp3" d="M20,9 L25,9" stroke="#d4a843" stroke-width="1.8" stroke-linecap="round" fill="none"/><path id="cp4" d="M5,15 L10,15" stroke="#d4a843" stroke-width="1.8" stroke-linecap="round" fill="none"/><path id="cp5" d="M10,15 L15,15" stroke="#d4a843" stroke-width="1.8" stroke-linecap="round" fill="none"/><path id="cp6" d="M15,15 L20,15" stroke="#d4a843" stroke-width="1.8" stroke-linecap="round" fill="none"/><path id="cp7" d="M20,15 L25,15" stroke="#d4a843" stroke-width="1.8" stroke-linecap="round" fill="none"/><path id="cp8" d="M5,21 L10,21" stroke="#d4a843" stroke-width="1.8" stroke-linecap="round" fill="none"/><path id="cp9" d="M10,21 L15,21" stroke="#d4a843" stroke-width="1.8" stroke-linecap="round" fill="none"/><path id="cp10" d="M15,21 L20,21" stroke="#d4a843" stroke-width="1.8" stroke-linecap="round" fill="none"/><path id="cp11" d="M20,21 L25,21" stroke="#d4a843" stroke-width="1.8" stroke-linecap="round" fill="none"/></svg></button>
 <div class="ov" id="ov"></div>
 
 <div class="app">
@@ -310,7 +304,6 @@ const A=[
   {
     "title": "愛情萬歲",
     "cover": "covers/02.jpg",
-    "coverPos": "center 20%",
     "year": "2000",
     "gradient": "linear-gradient(135deg,#1a0a2e,#2d1b4e,#4a2c7a,#7b4fb8)",
     "color": "#7b4fb8",
@@ -611,7 +604,6 @@ const A=[
   {
     "title": "神的孩子都在跳舞",
     "cover": "covers/05.jpg",
-    "coverPos": "30% center",
     "year": "2004",
     "gradient": "linear-gradient(135deg,#2a0a0a,#4a1a1a,#6a2a2a,#8a3a3a)",
     "color": "#8a3a3a",
@@ -1459,30 +1451,39 @@ const A=[
 // Sidebar
 const sb=document.getElementById('sb'),ov=document.getElementById('ov'),mb=document.getElementById('mb');
 let sbOpen=false;
-var logoPaths={
-  h:[[12,15,32,15],[12,15,32,15],[12,15,32,15],[12,15,32,15],[12,22,32,22],[12,22,32,22],[12,22,32,22],[12,22,32,22],[12,29,32,29],[12,29,32,29],[12,29,32,29],[12,29,32,29]],
-  l:[[3,14,3,40],[41,14,41,40],[3,14,14,23],[41,14,30,23],[22,5,14,23],[14,23,22,37],[22,37,30,23],[30,23,22,5],[14,23,30,39],[30,23,14,39],[3,40,41,40],[22,37,22,40]]
-};
-function morphLogo(toLogo){
-  var ps=mb.querySelectorAll('.lp');
-  var from=toLogo?logoPaths.h:logoPaths.l;
-  var to=toLogo?logoPaths.l:logoPaths.h;
-  var dur=400,start=null;
-  function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
-  function step(ts){
-    if(!start)start=ts;
-    var t=Math.min((ts-start)/dur,1),e=ease(t);
-    ps.forEach(function(p,i){
-      var f=from[i],o=to[i];
-      var x1=f[0]+(o[0]-f[0])*e,y1=f[1]+(o[1]-f[1])*e;
-      var x2=f[2]+(o[2]-f[2])*e,y2=f[3]+(o[3]-f[3])*e;
-      p.setAttribute('d','M'+x1.toFixed(1)+','+y1.toFixed(1)+' L'+x2.toFixed(1)+','+y2.toFixed(1));
-    });
-    if(t<1)requestAnimationFrame(step);
+// Crown logo animation: 12 line segments morphing from 3 hamburger lines
+const CP=[
+[[5,9,10,9],[9,10,15,2]],
+[[10,9,15,9],[15,2,21,10]],
+[[15,9,20,9],[9,10,15,15]],
+[[20,9,25,9],[15,15,21,10]],
+[[5,15,10,15],[5,14,9,10]],
+[[10,15,15,15],[21,10,25,14]],
+[[15,15,20,15],[15,15,9,21]],
+[[20,15,25,15],[15,15,21,21]],
+[[5,21,10,21],[5,27,5,14]],
+[[10,21,15,21],[5,27,9,27]],
+[[15,21,20,21],[21,27,25,27]],
+[[20,21,25,21],[25,14,25,27]]
+];
+let crownRAF=null;
+function animateCrown(open){
+  if(crownRAF)cancelAnimationFrame(crownRAF);
+  const dur=500,t0=performance.now();
+  function tick(now){
+    let p=Math.min((now-t0)/dur,1);
+    p=p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+    for(let i=0;i<12;i++){
+      const f=open?CP[i][0]:CP[i][1],t=open?CP[i][1]:CP[i][0];
+      const x1=f[0]+(t[0]-f[0])*p,y1=f[1]+(t[1]-f[1])*p;
+      const x2=f[2]+(t[2]-f[2])*p,y2=f[3]+(t[3]-f[3])*p;
+      document.getElementById('cp'+i).setAttribute('d','M'+x1.toFixed(1)+','+y1.toFixed(1)+' L'+x2.toFixed(1)+','+y2.toFixed(1));
+    }
+    if(p<1)crownRAF=requestAnimationFrame(tick);
   }
-  requestAnimationFrame(step);
+  crownRAF=requestAnimationFrame(tick);
 }
-function toggleSB(){sbOpen=!sbOpen;sb.classList.toggle('open',sbOpen);ov.classList.toggle('show',sbOpen);mb.classList.toggle('on',sbOpen);morphLogo(sbOpen)}
+function toggleSB(){sbOpen=!sbOpen;sb.classList.toggle('open',sbOpen);ov.classList.toggle('show',sbOpen);animateCrown(sbOpen)}
 function closeSB(){if(sbOpen)toggleSB()}
 mb.addEventListener('click',toggleSB);
 ov.addEventListener('click',closeSB);
@@ -1559,7 +1560,7 @@ function selectAlbum(idx){
   const sgHTML=a.songs.map((s,i)=>songCardHTML(s,idx,i,a)).join('');
   const pmHTML=playBtnsHTML('album',idx);
   mn.innerHTML=a.cover
-    ?'<div class="hr"><div class="hr-cover" style="background-image:url('+a.cover+')'+(a.coverPos?';--cpos:'+a.coverPos:'')+'"></div><div class="hr-c"><div class="lb">專輯</div><h2>'+a.title+'</h2><span class="yb">'+a.year+'</span><span class="sc">'+a.songs.length+' 首歌</span></div>'+pmHTML+'</div><div class="ss"><div class="sg">'+sgHTML+'</div></div>'
+    ?'<div class="hr"><div class="hr-cover" style="background-image:url('+a.cover+')"></div><div class="hr-c"><div class="lb">專輯</div><h2>'+a.title+'</h2><span class="yb">'+a.year+'</span><span class="sc">'+a.songs.length+' 首歌</span></div>'+pmHTML+'</div><div class="ss"><div class="sg">'+sgHTML+'</div></div>'
     :'<div class="hr"><div class="hr-bg" style="background:'+a.gradient+'"></div><div class="hr-c"><div class="lb">專輯</div><h2>'+a.title+'</h2><span class="yb">'+a.year+'</span><span class="sc">'+a.songs.length+' 首歌</span></div>'+pmHTML+'</div><div class="ss"><div class="sg">'+sgHTML+'</div></div>';
   mn.scrollTop=0;
 }
@@ -1638,8 +1639,7 @@ function playFromPlaylist(idx){
   if(idx<0||idx>=playlist.length)return;
   playlistIdx=idx;
   const {ai,si}=playlist[idx];
-  const card=document.querySelector('.sc2[data-ai="'+ai+'"][data-si="'+si+'"]');
-  const btn=card?card.querySelector('.pi'):null;
+  const btn=document.querySelector('.pi[data-ai="'+ai+'"][data-si="'+si+'"]');
   if(btn)playLocal(btn);
 }
 function playNext(){
