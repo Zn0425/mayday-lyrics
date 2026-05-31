@@ -1849,8 +1849,22 @@ function playFromPlaylist(idx){
   if(idx<0||idx>=playlist.length)return;
   playlistIdx=idx;
   const {ai,si}=playlist[idx];
-  const btn=document.querySelector('.pi[data-ai="'+ai+'"][data-si="'+si+'"]');
-  if(btn)playLocal(btn);
+  // Try to find the play button on the visible card
+  var card=document.querySelector('.sc2[data-ai="'+ai+'"][data-si="'+si+'"]');
+  var btn=card?card.querySelector('.pi'):null;
+  if(btn&&btn.dataset.audio){playLocal(btn);return}
+  // If card not visible, play directly from data
+  var s=A[ai].songs[si];
+  if(!s.audio)return;
+  if(curBtn)curBtn.classList.remove('active');
+  audio.src='mayday-audio/'+encodeURIComponent(s.audio);
+  playTitle=s.title;
+  audio.play().catch(function(){});
+  curBtn=null;
+  document.getElementById('audioBar').classList.add('show');
+  document.getElementById('abTitle').textContent=s.title;
+  document.getElementById('abPlay').innerHTML='<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+  if(plOpen)renderPlaylist();
 }
 function playNext(){
   if(!playlist.length||playMode==='none')return;
@@ -1937,13 +1951,6 @@ function cyclePlayMode(){
   }
   renderPlaylist();
 }
-// Auto-refresh playlist when song changes
-var _origPlayFromPlaylist=playFromPlaylist;
-playFromPlaylist=function(idx){
-  _origPlayFromPlaylist(idx);
-  if(plOpen)renderPlaylist();
-};
-
 var curBtn = null, playTitle = '', lrcTitle = '';
 
 function playLocal(btn) {
