@@ -1451,7 +1451,7 @@ const A=[
 // Sidebar
 const sb=document.getElementById('sb'),ov=document.getElementById('ov'),mb=document.getElementById('mb');
 let sbOpen=false;
-// Logo: pillars+notches+diagonals+diamond+Mlegs (pixel-exact from 214x223 image)
+// Logo: pillars+notches+diagonals+diamond(y21)+Mlegs (diamond bottom at y=21 not y=27)
 const CP=[
 [[5,9,10,9],[3,9,3,27]],
 [[10,9,15,9],[27,9,27,27]],
@@ -1461,8 +1461,8 @@ const CP=[
 [[10,15,15,15],[23,12,15,2]],
 [[15,15,20,15],[15,2,11,16]],
 [[20,15,25,15],[15,2,19,16]],
-[[5,21,10,21],[11,16,15,27]],
-[[10,21,15,21],[19,16,15,27]],
+[[5,21,10,21],[11,16,15,21]],
+[[10,21,15,21],[19,16,15,21]],
 [[15,21,20,21],[7,12,7,27]],
 [[20,21,25,21],[23,12,23,27]]
 ];
