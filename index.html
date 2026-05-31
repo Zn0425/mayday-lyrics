@@ -1780,6 +1780,20 @@ document.getElementById('mn').addEventListener('click',function(e){
   if(card)openLyrics(+card.dataset.ai,+card.dataset.si);
 });
 
+/* Metadata filter for lyrics display */
+function isMetaLine(t){
+  if(!t) return true;
+  var kw='词|曲|编|制作|编曲|弦乐|监制|和声|和音|MIDI|录音|混音|母带|钢琴|吉他|贝斯|鼓|单簧管|双簧管|大提琴|中提琴|小提琴|第|OP|SP|助理|乐器|录/混|Guitar|Bass|Drums|Strings|Piano|导演|制片|摄影|灯光|美术|道具|化妆|造型|发型|后期|保险|木工|摇臂|空拍|塔台|电工|统筹|宣传|经纪|企划|项目|数位|社群|数据|副总|新媒体|亚洲|舞台|九巴|灯车|执行|生活|场务|司机|器材|平面|电视|高雄场|副导演|特别感谢|词Lyrics|曲Composed|制作Produced|歌曲制作人|编曲演奏|编曲协力|弦乐编写|弦乐演奏|弦乐监制|和声编写|和声演唱|和音编写|和音演唱|录音室|助理录音|音乐总监|项目企划|音乐企划|音乐监制|制作执行';
+  if(new RegExp('^('+kw+')[：:]').test(t)) return true;
+  if(new RegExp('^('+kw+').*?[：:]').test(t)) return true;
+  if(/^.+ - .+$/.test(t)) return true;
+  if(/^【/.test(t)) return true;
+  if(/^-+$/.test(t)) return true;
+  if(/^此歌曲为/.test(t)) return true;
+  if(/^王者荣耀\s*$/.test(t)) return true;
+  return false;
+}
+
 // Open lyrics
 function openLyrics(ai,si){
   const a=A[ai],s=a.songs[si];
@@ -1796,7 +1810,7 @@ function openLyrics(ai,si){
       if(m){
         var t=parseInt(m[1])*60+parseInt(m[2])+parseInt(m[3])/(m[3].length===2?100:1000);
         var txt=m[4].trim();
-        if(txt && !/^(词|曲|编|制作|编曲|弦乐|监制|和声|和音|MIDI|录音|混音|母带|钢琴|吉他|贝斯|鼓|单簧管|双簧管|大提琴|中提琴|小提琴|第|OP|SP|助理|Guitar|Bass|Drums|Strings|Piano|词Lyrics|曲Composed|制作Produced|歌曲制作人|编曲演奏|编曲协力|弦乐编写|弦乐演奏|弦乐监制|和声编写|和声演唱|和音编写|和音演唱|录音室|助理录音|音乐总监|项目企划|音乐企划|音乐监制|制作执行)[：:]/.test(txt) && !/^(词|曲|编|制作|编曲|弦乐|监制|和声|和音|MIDI|录音|混音|母带|钢琴|吉他|贝斯|鼓|单簧管|双簧管|大提琴|中提琴|小提琴|第|OP|SP|助理|Guitar|Bass|Drums|Strings|Piano).*?[：:]/.test(txt) && !/^.+ - .+$/.test(txt) && !/^【/.test(txt) && !/^-+$/)
+        if(!isMetaLine(txt))
           html+='<div class="ly-line" data-time="'+t.toFixed(2)+'">'+txt+'</div>';
       }
     }
@@ -1812,11 +1826,7 @@ function openLyrics(ai,si){
       for(var j=0;j<lines2.length;j++){
         var l=lines2[j].trim();
         if(!l)continue;
-        if(/^(词|曲|编|制作|编曲|弦乐|监制|和声|和音|MIDI|录音|混音|母带|钢琴|吉他|贝斯|鼓|单簧管|双簧管|大提琴|中提琴|小提琴|第|OP|SP|助理|Guitar|Bass|Drums|Strings|Piano|词Lyrics|曲Composed|制作Produced|歌曲制作人|编曲演奏|编曲协力|弦乐编写|弦乐演奏|弦乐监制|和声编写|和声演唱|和音编写|和音演唱|录音室|助理录音|音乐总监|项目企划|音乐企划|音乐监制|制作执行)[：:]/.test(l))continue;
-        if(/^(词|曲|编|制作|编曲|弦乐|监制|和声|和音|MIDI|录音|混音|母带|钢琴|吉他|贝斯|鼓|单簧管|双簧管|大提琴|中提琴|小提琴|第|OP|SP|助理|Guitar|Bass|Drums|Strings|Piano).*?[：:]/.test(l))continue;
-        if(/^.+ - .+$/.test(l))continue;
-        if(/^【/.test(l))continue;
-        if(/^-+$/.test(l))continue;
+        if(isMetaLine(l))continue;
         filtered.push(l);
       }
       if(filtered.length)verses.push(filtered.join('<br>'));
