@@ -154,8 +154,11 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 .audio-bar .ab-btn{width:36px;height:36px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .audio-bar .ab-btn svg{width:16px;height:16px;fill:#000}
 .audio-bar .ab-time{font-size:11px;color:var(--dim);min-width:40px;text-align:center}
-.audio-bar .ab-bar{flex:1;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin:0 8px;cursor:pointer;position:relative}
-.audio-bar .ab-bar .ab-prog{height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width .1s}
+.audio-bar .ab-bar{flex:1;height:6px;background:rgba(255,255,255,0.1);border-radius:3px;margin:0 8px;cursor:pointer;position:relative;touch-action:none}
+.audio-bar .ab-bar .ab-prog{height:100%;background:var(--gold);border-radius:3px;width:0%;position:relative;pointer-events:none}
+.audio-bar .ab-bar .ab-prog::after{content:'';position:absolute;right:-6px;top:50%;transform:translateY(-50%);width:14px;height:14px;background:#fff;border-radius:50%;box-shadow:0 0 4px rgba(0,0,0,.4);opacity:0;transition:opacity .2s}
+.audio-bar .ab-bar:hover .ab-prog::after,.audio-bar .ab-bar.dragging .ab-prog::after{opacity:1}
+.audio-bar .ab-bar.dragging .ab-prog{transition:none}
 .pi.has-audio{cursor:pointer}.pi.active svg{fill:var(--gold);animation:pulse 1s infinite}
 
 /* Playlist panel */
@@ -249,7 +252,7 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
   <button class="ab-btn" id="abNext" onclick="playNext()" style="background:rgba(255,255,255,0.1);margin-left:4px"><svg viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg></button>
   <div class="ab-title" id="abTitle">-</div>
   <div class="ab-time" id="abCur">0:00</div>
-  <div class="ab-bar" id="abBar" onclick="seekAudio(event)"><div class="ab-prog" id="abProg"></div></div>
+  <div class="ab-bar" id="abBar"><div class="ab-prog" id="abProg"></div></div>
   <div class="ab-time" id="abDur">0:00</div>
   <button class="ab-list-btn" id="abListBtn" onclick="togglePlaylist()"><svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg></button>
 </div>
@@ -2050,9 +2053,42 @@ function togglePlay() {
 function seekAudio(e) {
     var bar = document.getElementById('abBar');
     var rect = bar.getBoundingClientRect();
-    var pct = (e.clientX - rect.left) / rect.width;
-    audio.currentTime = pct * audio.duration;
+    var pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    if (audio.duration) audio.currentTime = pct * audio.duration;
+    document.getElementById('abProg').style.width = (pct*100) + '%';
 }
+
+/* ---- Progress bar drag ---- */
+(function(){
+  var bar=document.getElementById('abBar'), prog=document.getElementById('abProg'), dragging=false;
+  function clientX(e){ return e.touches ? e.touches[0].clientX : e.clientX; }
+  function startDrag(e){
+    if(!audio.duration) return;
+    dragging=true; bar.classList.add('dragging');
+    moveDrag(e);
+    e.preventDefault();
+  }
+  function moveDrag(e){
+    if(!dragging) return;
+    var rect=bar.getBoundingClientRect(), pct=Math.max(0,Math.min(1,(clientX(e)-rect.left)/rect.width));
+    prog.style.width=(pct*100)+'%';
+    document.getElementById('abCur').textContent=fmtTime(pct*audio.duration);
+  }
+  function endDrag(e){
+    if(!dragging) return;
+    dragging=false; bar.classList.remove('dragging');
+    var rect=bar.getBoundingClientRect();
+    var cx = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+    var pct=Math.max(0,Math.min(1,(cx-rect.left)/rect.width));
+    audio.currentTime=pct*audio.duration;
+  }
+  bar.addEventListener('mousedown',startDrag);
+  bar.addEventListener('touchstart',startDrag,{passive:false});
+  document.addEventListener('mousemove',moveDrag);
+  document.addEventListener('touchmove',moveDrag,{passive:true});
+  document.addEventListener('mouseup',endDrag);
+  document.addEventListener('touchend',endDrag);
+})();
 
 function fmtTime(s) {
     var m = Math.floor(s/60);
