@@ -2061,12 +2061,13 @@ function seekAudio(e) {
 }
 
 /* ---- Progress bar drag ---- */
+var _barDragging=false;
 (function(){
   var bar=document.getElementById('abBar'), prog=document.getElementById('abProg'), dragging=false;
   function clientX(e){ return e.touches ? e.touches[0].clientX : e.clientX; }
   function startDrag(e){
     if(!audio.duration) return;
-    dragging=true; bar.classList.add('dragging');
+    dragging=true; _barDragging=true; bar.classList.add('dragging');
     moveDrag(e);
     e.preventDefault();
   }
@@ -2078,7 +2079,7 @@ function seekAudio(e) {
   }
   function endDrag(e){
     if(!dragging) return;
-    dragging=false; bar.classList.remove('dragging');
+    dragging=false; _barDragging=false; bar.classList.remove('dragging');
     var rect=bar.getBoundingClientRect();
     var cx = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
     var pct=Math.max(0,Math.min(1,(cx-rect.left)/rect.width));
@@ -2100,7 +2101,7 @@ function fmtTime(s) {
 
 audio.addEventListener('timeupdate', function() {
     if (audio.duration) {
-        document.getElementById('abProg').style.width = (audio.currentTime/audio.duration*100) + '%';
+        if(!_barDragging) document.getElementById('abProg').style.width = (audio.currentTime/audio.duration*100) + '%';
         document.getElementById('abCur').textContent = fmtTime(audio.currentTime);
         document.getElementById('abDur').textContent = fmtTime(audio.duration);
         if(document.getElementById('mo').classList.contains('on') && playTitle===lrcTitle){
