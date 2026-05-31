@@ -150,7 +150,7 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 
 .audio-bar{position:fixed;bottom:0;left:0;right:0;height:56px;background:rgba(6,8,26,0.97);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;padding:0 20px;z-index:200;transform:translateY(100%);transition:transform .3s}
 .audio-bar.show{transform:translateY(0)}
-.audio-bar .ab-title{flex:1;font-size:13px;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0 12px}
+.audio-bar .ab-title{flex:1;font-size:13px;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:0 12px;cursor:pointer;touch-action:manipulation}.audio-bar .ab-title:hover{color:var(--gold)}
 .audio-bar .ab-btn{width:36px;height:36px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .audio-bar .ab-btn svg{width:16px;height:16px;fill:#000}
 .audio-bar .ab-time{font-size:11px;color:var(--dim);min-width:40px;text-align:center}
@@ -1765,6 +1765,14 @@ function closeLyrics(){document.getElementById('mo').classList.remove('on')}
 document.getElementById('mx').addEventListener('click',closeLyrics);
 document.getElementById('mo').addEventListener('click',function(e){if(e.target===this)closeLyrics()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLyrics()});
+
+// Click song title in bottom bar to open lyrics
+document.getElementById('abTitle').addEventListener('click',function(){
+  if(!curBtn)return;
+  var ai=+curBtn.dataset.ai, si=+curBtn.dataset.si;
+  if(isNaN(ai)||isNaN(si))return;
+  openLyrics(ai,si);
+});
 
 // Scroll to song and highlight
 function scrollToSong(ai,si){
