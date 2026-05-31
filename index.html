@@ -1829,10 +1829,13 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLyrics(
 
 // Click song title in bottom bar to open lyrics
 document.getElementById('abTitle').addEventListener('click',function(){
-  if(!curBtn)return;
-  var ai=+curBtn.dataset.ai, si=+curBtn.dataset.si;
-  if(isNaN(ai)||isNaN(si))return;
-  openLyrics(ai,si);
+  // Try playlist first, then curAi/curSi
+  if(playlist.length && playlistIdx>=0 && playlistIdx<playlist.length){
+    var p=playlist[playlistIdx];
+    openLyrics(p.ai,p.si);
+  } else if(curAi>=0 && curSi>=0){
+    openLyrics(curAi,curSi);
+  }
 });
 
 // Scroll to song and highlight
@@ -1896,6 +1899,7 @@ function playFromPlaylist(idx){
   playTitle=s.title;
   audio.play().catch(function(){});
   curBtn=null;
+  curAi=ai;curSi=si;
   document.getElementById('audioBar').classList.add('show');
   document.getElementById('abTitle').textContent=s.title;
   document.getElementById('abPlay').innerHTML='<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
@@ -1986,7 +1990,7 @@ function cyclePlayMode(){
   }
   renderPlaylist();
 }
-var curBtn = null, playTitle = '', lrcTitle = '';
+var curBtn = null, playTitle = '', lrcTitle = '', curAi = -1, curSi = -1;
 
 function playLocal(btn) {
     var audioFile = btn.dataset.audio;
@@ -2010,6 +2014,9 @@ function playLocal(btn) {
     });
     btn.classList.add('active');
     curBtn = btn;
+    // Track current song's album/song index
+    var card=btn.closest('.sc2');
+    if(card){curAi=+card.dataset.ai;curSi=+card.dataset.si;}
     document.getElementById('audioBar').classList.add('show');
     document.getElementById('abTitle').textContent = title;
     document.getElementById('abPlay').innerHTML = '<svg viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
