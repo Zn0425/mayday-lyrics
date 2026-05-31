@@ -96,12 +96,8 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 .mo.on{display:flex;background:rgba(0,0,0,0.88);pointer-events:auto}
 .md{width:90%;max-width:640px;max-height:85vh;background:rgba(12,14,30,0.96);backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,0.08);border-radius:20px;overflow:hidden;opacity:0;transform:translateY(40px) scale(0.95);transition:all .4s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column}
 .mo.on .md{opacity:1;transform:translateY(0) scale(1)}
-.mh{position:relative;padding:40px 40px 30px;overflow:hidden;flex-shrink:0}
+.mh{position:relative;padding:16px 40px 0;overflow:hidden;flex-shrink:0;height:48px;display:flex;align-items:center;justify-content:flex-end}
 .mh-bg{position:absolute;inset:0}
-.mh::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(transparent,rgba(12,14,30,0.96))}
-.mh-c{position:relative;z-index:1}
-.mh-c .al2{font-size:11px;letter-spacing:3px;color:var(--gold);margin-bottom:8px}
-.mh-c .st2{font-size:30px;font-weight:700;color:#fff;text-shadow:0 2px 15px rgba(0,0,0,0.5)}
 .mc{position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:18px;cursor:pointer;touch-action:manipulation;display:flex;align-items:center;justify-content:center;z-index:2;transition:all .3s}
 .mc:active{background:rgba(255,255,255,0.25)}
 .ml{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:24px 40px 40px}
@@ -138,8 +134,7 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
   .sc2{padding:18px}
   .st{font-size:16px}
   .md{width:95%;max-height:90vh;border-radius:16px}
-  .mh{padding:30px 24px 20px}
-  .mh-c .st2{font-size:22px}
+  .mh{height:40px;padding:12px 24px 0}
   .ml{padding:15px 24px 30px}
   .lt{font-size:15px;line-height:2.2}
   .wp{padding:40px 20px}
@@ -223,10 +218,6 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
   <div class="md">
     <div class="mh">
       <div class="mh-bg" id="mhb"></div>
-      <div class="mh-c">
-        <div class="al2" id="mal"></div>
-        <div class="st2" id="mst"></div>
-      </div>
       <button class="mc" id="mx">&times;</button>
     </div>
     <div class="ml">
@@ -1765,8 +1756,6 @@ document.getElementById('mn').addEventListener('click',function(e){
 function openLyrics(ai,si){
   const a=A[ai],s=a.songs[si];
   document.getElementById('mhb').style.background=a.gradient;
-  document.getElementById('mal').textContent=a.title+' · '+a.year;
-  document.getElementById('mst').textContent=s.title;
   lrcTitle=s.title;
   var lrcEl=document.getElementById('mlt');
   if(LRC[s.title]){
