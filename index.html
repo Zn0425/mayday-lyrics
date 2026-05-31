@@ -1738,7 +1738,7 @@ function showFavSongs(){
     mn.innerHTML='<div class="wp"><div class="wp-icon">❤️</div><h2>還沒有收藏歌曲</h2><p>點擊歌曲卡片右上角的 ♡ 收藏喜歡的歌</p></div>';
     return;
   }
-  mn.innerHTML='<div class="hr"><div class="hr-bg" style="background:linear-gradient(135deg,#1a0a0a,#2a1a1a,#3a1a1a,#4a2a2a)"></div><div class="hr-c"><div class="lb">收藏</div><h2>我的收藏</h2><span class="sc">'+songs.length+' 首歌</span></div>'+playBtnsHTML('fav',0)+'</div><div class="ss"><div class="sg">'+songs.map((item,i)=>{
+  mn.innerHTML='<div class="hr"><div class="hr-cover" style="background-image:url(covers/fav.jpg)"></div><div class="hr-c"><div class="lb">收藏</div><h2>我的收藏</h2><span class="sc">'+songs.length+' 首歌</span></div>'+playBtnsHTML('fav',0)+'</div><div class="ss"><div class="sg">'+songs.map((item,i)=>{
     const {s,ai,si,color}=item;
     return '<div class="sc2" style="--accent:'+color+'" data-ai="'+ai+'" data-si="'+si+'"><button class="fav on" data-fai="'+ai+'" data-fsi="'+si+'"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button><div class="sn">NO. '+String(i+1).padStart(2,'0')+'</div><div class="st">'+s.title+'</div><div class="ss2">'+(s.lyricist?'词：'+s.lyricist+' / 曲：'+s.composer:'')+'</div><div class="pi'+(s.audio?' has-audio':'')+'" data-audio="'+(s.audio||'')+'" data-mid="'+(s.mid||'')+'" data-title="'+s.title.replace(/"/g,'&quot;')+'"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>';
   }).join('')+'</div></div>';
