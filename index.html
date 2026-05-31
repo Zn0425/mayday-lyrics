@@ -1796,7 +1796,7 @@ function openLyrics(ai,si){
       if(m){
         var t=parseInt(m[1])*60+parseInt(m[2])+parseInt(m[3])/(m[3].length===2?100:1000);
         var txt=m[4].trim();
-        if(txt && !/^词[：:]/.test(txt) && !/^曲[：:]/.test(txt) && !/^编[：:]/.test(txt) && !/^制作[：:]/.test(txt) && !/^.+ - .+$/.test(txt))
+        if(txt && !/^(词|曲|编|制作|编曲|弦乐|监制|和声|和音|MIDI|录音|混音|母带|钢琴|吉他|贝斯|鼓|单簧管|双簧管|大提琴|中提琴|小提琴|第|OP|SP|助理|Guitar|Bass|Drums|Strings|Piano|词Lyrics|曲Composed|制作Produced|歌曲制作人|编曲演奏|编曲协力|弦乐编写|弦乐演奏|弦乐监制|和声编写|和声演唱|和音编写|和音演唱|录音室|助理录音|音乐总监|项目企划|音乐企划|音乐监制|制作执行)[：:]/.test(txt) && !/^(词|曲|编|制作|编曲|弦乐|监制|和声|和音|MIDI|录音|混音|母带|钢琴|吉他|贝斯|鼓|单簧管|双簧管|大提琴|中提琴|小提琴|第|OP|SP|助理|Guitar|Bass|Drums|Strings|Piano).*?[：:]/.test(txt) && !/^.+ - .+$/.test(txt) && !/^【/.test(txt) && !/^-+$/)
           html+='<div class="ly-line" data-time="'+t.toFixed(2)+'">'+txt+'</div>';
       }
     }
@@ -1812,8 +1812,11 @@ function openLyrics(ai,si){
       for(var j=0;j<lines2.length;j++){
         var l=lines2[j].trim();
         if(!l)continue;
-        if(/^词[：:]/.test(l)||/^曲[：:]/.test(l)||/^编[：:]/.test(l)||/^制作[：:]/.test(l))continue;
+        if(/^(词|曲|编|制作|编曲|弦乐|监制|和声|和音|MIDI|录音|混音|母带|钢琴|吉他|贝斯|鼓|单簧管|双簧管|大提琴|中提琴|小提琴|第|OP|SP|助理|Guitar|Bass|Drums|Strings|Piano|词Lyrics|曲Composed|制作Produced|歌曲制作人|编曲演奏|编曲协力|弦乐编写|弦乐演奏|弦乐监制|和声编写|和声演唱|和音编写|和音演唱|录音室|助理录音|音乐总监|项目企划|音乐企划|音乐监制|制作执行)[：:]/.test(l))continue;
+        if(/^(词|曲|编|制作|编曲|弦乐|监制|和声|和音|MIDI|录音|混音|母带|钢琴|吉他|贝斯|鼓|单簧管|双簧管|大提琴|中提琴|小提琴|第|OP|SP|助理|Guitar|Bass|Drums|Strings|Piano).*?[：:]/.test(l))continue;
         if(/^.+ - .+$/.test(l))continue;
+        if(/^【/.test(l))continue;
+        if(/^-+$/.test(l))continue;
         filtered.push(l);
       }
       if(filtered.length)verses.push(filtered.join('<br>'));
