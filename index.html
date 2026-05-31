@@ -157,6 +157,32 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 .audio-bar .ab-bar{flex:1;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;margin:0 8px;cursor:pointer;position:relative}
 .audio-bar .ab-bar .ab-prog{height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width .1s}
 .pi.has-audio{cursor:pointer}.pi.active svg{fill:var(--gold);animation:pulse 1s infinite}
+
+/* Playlist panel */
+.pl-panel{position:fixed;bottom:56px;left:0;right:0;max-height:50vh;background:rgba(6,8,26,0.97);backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,0.1);z-index:199;transform:translateY(100%);transition:transform .3s ease;display:flex;flex-direction:column;overflow:hidden}
+.pl-panel.show{transform:translateY(0)}
+.pl-header{padding:14px 20px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0}
+.pl-header h3{margin:0;font-size:14px;color:var(--txt);font-weight:600}
+.pl-header .pl-mode{font-size:11px;color:var(--dim);padding:3px 10px;border-radius:12px;background:rgba(255,255,255,0.06);cursor:pointer;touch-action:manipulation;transition:color .2s}
+.pl-header .pl-mode:hover{color:var(--gold)}
+.pl-list{overflow-y:auto;flex:1;padding:6px 0}
+.pl-list::-webkit-scrollbar{width:4px}
+.pl-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px}
+.pl-item{display:flex;align-items:center;padding:10px 20px;cursor:pointer;touch-action:manipulation;transition:background .15s;gap:12px}
+.pl-item:hover{background:rgba(255,255,255,0.04)}
+.pl-item.active{background:rgba(212,168,67,0.08)}
+.pl-item .pl-num{font-size:11px;color:var(--dim);min-width:20px;text-align:right;flex-shrink:0}
+.pl-item.active .pl-num{color:var(--gold)}
+.pl-item .pl-name{flex:1;font-size:13px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-item.active .pl-name{color:var(--gold);font-weight:600}
+.pl-item .pl-artist{font-size:11px;color:rgba(255,255,255,0.25);flex-shrink:0;max-width:120px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-item .pl-dur{font-size:11px;color:rgba(255,255,255,0.2);min-width:36px;text-align:right;flex-shrink:0}
+.pl-empty{padding:40px 20px;text-align:center;color:var(--dim);font-size:13px}
+.ab-list-btn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.1);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:8px;touch-action:manipulation;transition:background .2s}
+.ab-list-btn:hover{background:rgba(255,255,255,0.15)}
+.ab-list-btn svg{width:16px;height:16px;fill:var(--dim)}
+.ab-list-btn.on{background:rgba(212,168,67,0.2)}
+.ab-list-btn.on svg{fill:var(--gold)}
 </style>
 </head>
 <body>
@@ -1855,6 +1881,69 @@ function startPlay(type,idx,mode){
   playFromPlaylist(0);
 }
 
+// Playlist panel
+var plOpen=false;
+function togglePlaylist(){
+  plOpen=!plOpen;
+  document.getElementById('plPanel').classList.toggle('show',plOpen);
+  document.getElementById('abListBtn').classList.toggle('on',plOpen);
+  if(plOpen)renderPlaylist();
+}
+function renderPlaylist(){
+  var el=document.getElementById('plList');
+  var titleEl=document.getElementById('plTitle');
+  var modeEl=document.getElementById('plMode');
+  var modeNames={'none':'未播放','sequential':'顺序播放','shuffle':'随机播放'};
+  modeEl.textContent=modeNames[playMode]||'顺序播放';
+  if(!playlist.length){
+    el.innerHTML='<div class="pl-empty">暂无播放列表<br><span style="font-size:11px;color:rgba(255,255,255,0.2)">点击专辑的"顺序播放"或"随机播放"开始</span></div>';
+    titleEl.textContent='播放列表';
+    return;
+  }
+  titleEl.textContent='播放列表 ('+playlist.length+'首)';
+  var html='';
+  for(var i=0;i<playlist.length;i++){
+    var p=playlist[i];
+    var s=A[p.ai].songs[p.si];
+    var active=(i===playlistIdx)?' active':'';
+    var artist='';
+    if(s.lyricist&&s.composer) artist=s.lyricist.split('/')[0]+'/'+s.composer.split('/')[0];
+    else if(s.lyricist) artist=s.lyricist.split('/')[0];
+    html+='<div class="pl-item'+active+'" onclick="playFromPlaylist('+i+')">'
+      +'<span class="pl-num">'+(i+1)+'</span>'
+      +'<span class="pl-name">'+s.title+'</span>'
+      +(artist?'<span class="pl-artist">'+artist+'</span>':'')
+      +'</div>';
+  }
+  el.innerHTML=html;
+  // Scroll active into view
+  var activeEl=el.querySelector('.pl-item.active');
+  if(activeEl)activeEl.scrollIntoView({block:'nearest',behavior:'smooth'});
+}
+function cyclePlayMode(){
+  var modes=['sequential','shuffle'];
+  var idx=modes.indexOf(playMode);
+  playMode=modes[(idx+1)%modes.length];
+  if(playMode==='shuffle'&&playlist.length){
+    var current=playlistIdx>=0?playlist[playlistIdx]:null;
+    shuffleArr(playlist);
+    if(current){
+      for(var i=0;i<playlist.length;i++){
+        if(playlist[i].ai===current.ai&&playlist[i].si===current.si){
+          playlistIdx=i;break;
+        }
+      }
+    }
+  }
+  renderPlaylist();
+}
+// Auto-refresh playlist when song changes
+var _origPlayFromPlaylist=playFromPlaylist;
+playFromPlaylist=function(idx){
+  _origPlayFromPlaylist(idx);
+  if(plOpen)renderPlaylist();
+};
+
 var curBtn = null, playTitle = '', lrcTitle = '';
 
 function playLocal(btn) {
@@ -1943,6 +2032,13 @@ audio.addEventListener('ended', function() {
 });
 </script>
 
+<div class="pl-panel" id="plPanel">
+  <div class="pl-header">
+    <h3 id="plTitle">播放列表</h3>
+    <span class="pl-mode" id="plMode" onclick="cyclePlayMode()">顺序播放</span>
+  </div>
+  <div class="pl-list" id="plList"><div class="pl-empty">暂无播放列表</div></div>
+</div>
 <div class="audio-bar" id="audioBar">
   <button class="ab-btn" id="abPrev" onclick="playPrev()" style="background:rgba(255,255,255,0.1);margin-right:4px"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
   <button class="ab-btn" id="abPlay" onclick="togglePlay()"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></button>
@@ -1951,6 +2047,7 @@ audio.addEventListener('ended', function() {
   <div class="ab-time" id="abCur">0:00</div>
   <div class="ab-bar" id="abBar" onclick="seekAudio(event)"><div class="ab-prog" id="abProg"></div></div>
   <div class="ab-time" id="abDur">0:00</div>
+  <button class="ab-list-btn" id="abListBtn" onclick="togglePlaylist()"><svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg></button>
 </div>
 </body>
 </html>
