@@ -1794,6 +1794,8 @@ function isMetaLine(t){
   if(/^-+$/.test(t)) return true;
   if(/^此歌曲为/.test(t)) return true;
   if(/^王者荣耀\s*$/.test(t)) return true;
+  if(/^-「.*」-$/.test(t)) return true;
+  if(/有限公司/.test(t)) return true;
   return false;
 }
 
