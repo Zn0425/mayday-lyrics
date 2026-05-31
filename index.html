@@ -1741,6 +1741,7 @@ function openLyrics(ai,si){
   document.getElementById('mhb').style.background=a.gradient;
   document.getElementById('mal').textContent=a.title+' · '+a.year;
   document.getElementById('mst').textContent=s.title;
+  lrcTitle=s.title;
   var lrcEl=document.getElementById('mlt');
   if(LRC[s.title]){
     var lines=LRC[s.title].split('\n');
@@ -1846,7 +1847,7 @@ function startPlay(type,idx,mode){
   playFromPlaylist(0);
 }
 
-var curBtn = null;
+var curBtn = null, playTitle = '', lrcTitle = '';
 
 function playLocal(btn) {
     var audioFile = btn.dataset.audio;
@@ -1863,6 +1864,7 @@ function playLocal(btn) {
     }
     if (curBtn) curBtn.classList.remove('active');
     audio.src = 'mayday-audio/' + encodeURIComponent(audioFile);
+    playTitle = title;
     audio.play().catch(function() {
         if (mid) window.open('https://y.qq.com/n/ryqq/songDetail/'+mid,'_blank');
         btn.classList.remove('active');
@@ -1904,7 +1906,7 @@ audio.addEventListener('timeupdate', function() {
         document.getElementById('abProg').style.width = (audio.currentTime/audio.duration*100) + '%';
         document.getElementById('abCur').textContent = fmtTime(audio.currentTime);
         document.getElementById('abDur').textContent = fmtTime(audio.duration);
-        if(document.getElementById('mo').classList.contains('on')){
+        if(document.getElementById('mo').classList.contains('on') && playTitle===lrcTitle){
           var lines=document.querySelectorAll('#mlt .ly-line[data-time]');
           if(lines.length){
             var ct=audio.currentTime, best=null;
