@@ -52,16 +52,16 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 .hr-bg{position:absolute;inset:0;transition:all .8s ease}
 .hr-cover{position:absolute;inset:0;background-size:cover;background-position:center;transition:all .8s ease;z-index:0}
 .hr-cover::before{content:'';position:absolute;top:0;left:0;right:0;height:60px;background:linear-gradient(rgba(10,10,20,0.5),transparent);z-index:1}
-.hr-cover::after{content:'';position:absolute;bottom:0;left:0;right:0;height:50%;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);-webkit-mask-image:linear-gradient(transparent 0%,rgba(0,0,0,0.3) 40%,rgba(0,0,0,0.7) 70%,black 100%);mask-image:linear-gradient(transparent 0%,rgba(0,0,0,0.3) 40%,rgba(0,0,0,0.7) 70%,black 100%);z-index:1}
-.hr-c{position:relative;z-index:1}
+.hr-cover::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60%;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);-webkit-mask-image:linear-gradient(transparent 0%,rgba(0,0,0,0.15) 30%,rgba(0,0,0,0.5) 60%,rgba(0,0,0,0.85) 85%,black 100%);mask-image:linear-gradient(transparent 0%,rgba(0,0,0,0.15) 30%,rgba(0,0,0,0.5) 60%,rgba(0,0,0,0.85) 85%,black 100%);z-index:1}
+.hr-c{position:relative;z-index:2}
 .hr-c .lb{font-size:13px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;opacity:0;transform:translateY(20px);animation:fiu .6s .2s forwards}
 .hr-c h2{font-size:42px;font-weight:700;letter-spacing:2px;line-height:1.3;color:#fff;text-shadow:0 2px 30px rgba(0,0,0,0.8),0 0 60px rgba(0,0,0,0.5);margin-bottom:8px;opacity:0;transform:translateY(20px);animation:fiu .6s .35s forwards}
 .hr-c .yb{display:inline-block;padding:4px 14px;background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.18);border-radius:20px;font-size:13px;letter-spacing:2px;color:rgba(255,255,255,0.85);opacity:0;transform:translateY(20px);animation:fiu .6s .5s forwards}
 .hr-c .sc{display:inline-block;margin-left:10px;padding:4px 14px;background:rgba(212,168,83,0.2);border:1px solid rgba(212,168,83,0.25);border-radius:20px;font-size:13px;letter-spacing:1px;color:var(--gold);opacity:0;transform:translateY(20px);animation:fiu .6s .6s forwards}
-.hr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(transparent,rgba(10,10,20,0.85));pointer-events:none;z-index:1}
+.hr::after{content:'';position:absolute;bottom:0;left:0;right:0;height:100%;background:linear-gradient(transparent 0%,transparent 30%,rgba(6,8,26,0.15) 50%,rgba(6,8,26,0.5) 70%,rgba(6,8,26,0.85) 85%,#06081a 100%);pointer-events:none;z-index:1}
 @keyframes fiu{to{opacity:1;transform:translateY(0)}}
 
-.ss{padding:0 50px 60px}
+.ss{padding:80px 50px 80px;margin-top:-80px;position:relative;background:linear-gradient(transparent 0%,#06081a 120px,#06081a 100%)}
 .sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
 .sc2{background:var(--card);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:24px;cursor:pointer;touch-action:manipulation;transition:all .3s;position:relative;overflow:hidden}
 .sc2::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--accent,var(--gold));opacity:0;transition:opacity .3s}
@@ -92,7 +92,7 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
   .play-modes button{padding:6px 12px;font-size:12px}
 }
 
-.mo{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0);display:none;align-items:center;justify-content:center;pointer-events:none;transition:background .4s}
+.mo{position:fixed;inset:0;z-index:250;background:rgba(0,0,0,0);display:none;align-items:center;justify-content:center;pointer-events:none;transition:background .4s}
 .mo.on{display:flex;background:rgba(0,0,0,0.88);pointer-events:auto}
 .md{width:90%;max-width:640px;max-height:85vh;background:rgba(12,14,30,0.96);backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,0.08);border-radius:20px;overflow:hidden;opacity:0;transform:translateY(40px) scale(0.95);transition:all .4s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column}
 .mo.on .md{opacity:1;transform:translateY(0) scale(1)}
@@ -104,7 +104,7 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 .mh-c .st2{font-size:30px;font-weight:700;color:#fff;text-shadow:0 2px 15px rgba(0,0,0,0.5)}
 .mc{position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:18px;cursor:pointer;touch-action:manipulation;display:flex;align-items:center;justify-content:center;z-index:2;transition:all .3s}
 .mc:active{background:rgba(255,255,255,0.25)}
-.ml{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:24px 40px 40px}
+.ml{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:24px 40px 80px}
 .ml::-webkit-scrollbar{width:4px}
 .ml::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px}
 .lt{font-size:17px;line-height:2.4;color:rgba(232,224,212,0.9);letter-spacing:0.5px;text-align:center;padding-bottom:20px}
@@ -133,14 +133,14 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
   .ov{display:block}
   .hr{padding:40px 16px 30px;min-height:280px}
   .hr-c h2{font-size:28px}
-  .ss{padding:0 16px 40px}
+  .ss{padding:60px 16px 70px;margin-top:-60px;position:relative;background:linear-gradient(transparent 0%,#06081a 100px,#06081a 100%)}
   .sg{grid-template-columns:1fr}
   .sc2{padding:18px}
   .st{font-size:16px}
   .md{width:95%;max-height:90vh;border-radius:16px}
   .mh{padding:30px 24px 20px}
   .mh-c .st2{font-size:22px}
-  .ml{padding:15px 24px 30px}
+  .ml{padding:15px 24px 60px}
   .lt{font-size:15px;line-height:2.2}
   .wp{padding:40px 20px}
   .wp h2{font-size:24px}
@@ -162,7 +162,7 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 .pi.has-audio{cursor:pointer}.pi.active svg{fill:var(--gold);animation:pulse 1s infinite}
 
 /* Playlist panel */
-.pl-panel{position:fixed;bottom:56px;left:0;right:0;max-height:50vh;background:rgba(6,8,26,0.97);backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,0.1);z-index:199;transform:translateY(100%);transition:transform .3s ease;display:flex;flex-direction:column;overflow:hidden}
+.pl-panel{position:fixed;bottom:56px;left:0;right:0;max-height:50vh;background:rgba(6,8,26,0.97);backdrop-filter:blur(24px);border-top:1px solid rgba(255,255,255,0.1);z-index:199;transform:translateY(calc(100% + 56px));transition:transform .3s ease;display:flex;flex-direction:column;overflow:hidden}
 .pl-panel.show{transform:translateY(0)}
 .pl-header{padding:14px 20px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0}
 .pl-header h3{margin:0;font-size:14px;color:var(--txt);font-weight:600}
@@ -259,6 +259,7 @@ html,body{height:100%;background:var(--bg);color:var(--txt);font-family:-apple-s
 
 <script>
 const LRC={
+"爱人啊":"[00:13.50]日子一天一天的过偶尔也会寂寞\n[00:21.57]我也想过找个人说\n[00:26.91]但我总会给自己留个借口\n[00:33.45]借口一个一个剥落反正只是伤口\n[00:41.61]那有什么那没什么\n[00:46.92]骗自己等待一定会有结果\n[00:53.79]这一天一天等等等穿了黑夜\n[00:58.86]何时才能够飞飞飞到你身边\n[01:04.11]我的爱人啊我的爱人啊\n[01:08.85]你到底会在哪\n[01:16.02]灵魂一点一点的磨\n[01:20.97]磨得晶莹剔透\n[01:24.12]滚出眼眶\n[01:26.64]滴落胸口\n[01:29.37]这颗泪也许是我唯一收获\n[01:36.27]这一天一天等等等穿了黑夜\n[01:41.37]何时才能够飞飞飞到你身边\n[01:46.62]我的爱人啊我的爱人啊\n[01:51.39]你到底会在哪\n[01:56.94]如果你回回回到我身边\n[02:01.29]我会用这一生给你全部的世界\n[02:06.60]我会爱你呀我会爱你呀\n[02:31.23]这一天一天等等等穿了黑夜\n[02:36.30]何时才能够飞飞飞到你身边\n[02:41.61]我的爱人啊我的爱人啊\n[02:46.26]你到底会在哪\n[02:51.93]如果你回回回到我身边\n[02:56.28]我会用这一生给你全部的世界\n[03:01.62]我会爱你呀我会爱你呀\n[03:06.27]你到底会在哪\n[03:19.17]我会爱你呀我会爱你呀\n[03:23.91]你到底会在哪\n[03:29.16]我的爱人啊我的爱人啊\n[03:33.84]你到底会在哪",
 "2012":"[ti:2012]\n[ar:五月天]\n[al:第二人生(末日版)]\n[by:]\n[offset:0]\n[00:00.00]2012 - 五月天 (Mayday)\n[00:14.21]词：阿信\n[00:28.42]曲：阿信\n[00:42.63]再没有时间 能去延后\n[00:45.57]再没有后路 能去逃脱\n[00:48.66]再没有备案 没有逃生线索\n[00:52.48]再没蓝色天空\n[00:54.90]我突然想到 小的时候\n[00:57.84]总等着长大 去追的梦\n[01:00.90]就这么活着 突然西元尽头\n[01:04.77]却没有一件 真的去做\n[01:07.94]再看 最后一眼 青春的星空\n[01:10.72]灿烂 火光就像 盛夏的烟火\n[01:13.69]欢送 挣扎万年 文明的颠峰\n[01:16.85]我们啊 将变星尘 永远飘在黑暗宇宙\n[01:20.73]今天 珍重 谁知道是真是梦\n[01:26.79]明天 过后 是解答或解脱\n[01:41.15]摘一颗星星 要盖高楼\n[01:43.77]爱一种自由 燃尽石油\n[01:47.04]追一种富有 却要挥霍所有\n[01:50.82]寄生地表的虫\n[01:53.15]落叶剂制造 落叶的秋\n[01:56.09]辐射尘覆盖 清晨的冬\n[01:59.29]地球还残喘 人就创作末日\n[02:03.10]又何必等到 上帝没收\n[02:06.35]谁把 愉快的愉 换 偷窃的偷\n[02:09.16]难道 自找的找 是 自我的我\n[02:11.91]终于 未来的未 变 末日的末\n[02:15.28]我们啊 是先坠落 或先坠入自甘堕落\n[02:19.27]今天 珍重 谁知道是真是梦\n[02:25.33]明天 过后 解答或解脱\n[02:31.32]如果 你在 幸存的平行宇宙\n[02:37.57]请记 得我 曾这么预言过\n[02:52.44]这首歌预言过\n[03:20.37]听着 无人电台 最终的播送\n[03:22.94]那些 爱过的歌 像浩瀚乡愁\n[03:25.88]花朵 长出云朵 弹头落在街头\n[03:29.03]我们啊 停不下来 以为闯关却在闯祸\n[03:33.00]今天 珍重 谁知道是真是梦\n[03:39.11]明天 过后 解答或解脱\n[03:45.28]如果 你在 幸存的平行宇宙\n[03:51.34]要怎么做 要怎么活\n[03:53.84]请你对自己说\n[04:01.76]诚实对自己说\n[04:06.34]快对自己说",
 "DNA":"[ti:DNA]\n[ar:五月天]\n[al:DNA]\n[by:]\n[offset:0]\n[00:00.00]DNA - 五月天 (Mayday)\n[00:05.59]词：阿信\n[00:11.18]曲：阿信\n[00:16.77]那是谁用掉了我的牙膏\n[00:19.28]我的鞋和外套是谁穿走了\n[00:22.54]那是谁在我家大方洗澡\n[00:25.69]镜子前他和我一样的外表\n[00:28.83]谁搬进我的大脑\n[00:31.40]\n[00:32.11]谁绑住我的手脚\n[00:34.59]\n[00:35.15]是DNA唱我反调\n[00:37.74]\n[00:38.45]还是我的命运不敢自编自导\n[00:41.74]想要叫那就叫 想甩就甩跳就跳\n[00:44.85]跳更高别靠腰 要靠心脏的火药\n[00:47.93]要不要难道要 别人帮你决定好\n[00:51.06]好不好就现在 抢回自己的心跳\n[00:55.54]\n[00:56.61]自己的心跳\n[00:57.91]\n[01:03.82]那是谁总是说有够衰小\n[01:06.78]那是谁只祷告只会打嘴炮\n[01:09.93]那是谁被通缉正在逃跑\n[01:12.57]\n[01:13.11]罪名是绑架了自己的微笑\n[01:16.29]谁搬进我的大脑谁绑住我的手脚\n[01:22.01]\n[01:22.70]是DNA唱我反调\n[01:25.24]\n[01:25.92]还是我的命运不敢自编自导\n[01:29.12]想要叫那就叫 想甩就甩跳就跳\n[01:32.23]跳更高别靠腰 要靠心脏的火药\n[01:35.29]要不要难道要 别人帮你决定好\n[01:38.42]好不好就现在 抢回自己的心跳\n[01:42.46]\n[02:10.10]想要叫那就叫 想甩就甩跳就跳\n[02:13.15]跳更高别靠腰 要靠心脏的火药\n[02:16.50]要不要难道要 别人帮你决定好\n[02:19.48]好不好就现在 抢回自己的心跳\n[02:23.48]心跳跳跃狂奔奔跑",
 "Enrich Your Life":"[ti:Enrich Your Life]\n[ar:五月天]\n[al:Enrich Your Life]\n[by:]\n[offset:0]\n[00:00.00]Enrich Your Life - 五月天 (Mayday)\n[00:15.35]词：阿信\n[00:30.70]曲：怪兽\n[00:46.05]心情很晴朗\n[00:47.63]在大树下\n[00:49.14]笑着和你乘凉\n[00:51.88]突然领悟了\n[00:54.87]幸福的形状\n[00:57.60]幸福不是多而是遗忘\n[01:03.39]能遗忘生命的烦恼忧伤\n[01:10.41]是你爱你让我变得更强\n[01:14.95]为你战斗永不投降\n[01:17.97]让我照顾你\n[01:19.64]丰富你的人生愿望\n[01:23.07]我超越我自己的想象\n[01:27.27]风雨再大能为你挡\n[01:30.31]让我照顾你\n[01:31.87]让你未来放在我肩上\n[02:02.47]是你\n[02:04.03]爱你让我变得更强\n[02:07.18]为你战斗永不投降\n[02:10.22]让我照顾你\n[02:11.70]丰富你的人生愿望\n[02:15.29]我\n[02:16.39]超越我自己的想象\n[02:19.46]风雨再大能为你挡\n[02:22.58]让我照顾你\n[02:24.18]让你未来放在我肩上\n[02:32.50]Enrich your life\n[02:38.52]Enrich your life",
@@ -1315,7 +1316,8 @@ const A=[
   },
   {
     "title": "精選單曲",
-    "year": "1999-2025",
+    "cover": "covers/selected.jpg",
+    "year": "1999-2026",
     "gradient": "linear-gradient(135deg,#1a0a2a,#2a1a4a,#3a2a6a,#4a3a8a)",
     "color": "#6a4aaa",
     "songs": [
@@ -1744,7 +1746,7 @@ function showFavSongs(){
     mn.innerHTML='<div class="wp"><div class="wp-icon">❤️</div><h2>還沒有收藏歌曲</h2><p>點擊歌曲卡片右上角的 ♡ 收藏喜歡的歌</p></div>';
     return;
   }
-  mn.innerHTML='<div class="hr"><div class="hr-bg" style="background:linear-gradient(135deg,#1a0a0a,#2a1a1a,#3a1a1a,#4a2a2a)"></div><div class="hr-c"><div class="lb">收藏</div><h2>我的收藏</h2><span class="sc">'+songs.length+' 首歌</span></div>'+playBtnsHTML('fav',0)+'</div><div class="ss"><div class="sg">'+songs.map((item,i)=>{
+  mn.innerHTML='<div class="hr"><div class="hr-cover" style="background-image:url(covers/fav.jpg)"></div><div class="hr-c"><div class="lb">收藏</div><h2>我的收藏</h2><span class="sc">'+songs.length+' 首歌</span></div>'+playBtnsHTML('fav',0)+'</div><div class="ss"><div class="sg">'+songs.map((item,i)=>{
     const {s,ai,si,color}=item;
     return '<div class="sc2" style="--accent:'+color+'" data-ai="'+ai+'" data-si="'+si+'"><button class="fav on" data-fai="'+ai+'" data-fsi="'+si+'"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button><div class="sn">NO. '+String(i+1).padStart(2,'0')+'</div><div class="st">'+s.title+'</div><div class="ss2">'+(s.lyricist?'词：'+s.lyricist+' / 曲：'+s.composer:'')+'</div><div class="pi'+(s.audio?' has-audio':'')+'" data-audio="'+(s.audio||'')+'" data-mid="'+(s.mid||'')+'" data-title="'+s.title.replace(/"/g,'&quot;')+'"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div></div>';
   }).join('')+'</div></div>';
@@ -1790,6 +1792,22 @@ document.getElementById('mn').addEventListener('click',function(e){
   if(card)openLyrics(+card.dataset.ai,+card.dataset.si);
 });
 
+/* Metadata filter for lyrics display */
+function isMetaLine(t){
+  if(!t) return true;
+  var kw='词|曲|编|制作|编曲|弦乐|监制|和声|和音|MIDI|录音|混音|母带|钢琴|吉他|贝斯|鼓|单簧管|双簧管|大提琴|中提琴|小提琴|第|OP|SP|助理|乐器|录/混|Guitar|Bass|Drums|Strings|Piano|导演|制片|摄影|灯光|美术|道具|化妆|造型|发型|后期|保险|木工|摇臂|空拍|塔台|电工|统筹|宣传|经纪|企划|项目|数位|社群|数据|副总|新媒体|亚洲|舞台|九巴|灯车|执行|生活|场务|司机|器材|平面|电视|高雄场|副导演|特别感谢|词Lyrics|曲Composed|制作Produced|歌曲制作人|编曲演奏|编曲协力|弦乐编写|弦乐演奏|弦乐监制|和声编写|和声演唱|和音编写|和音演唱|录音室|助理录音|音乐总监|项目企划|音乐企划|音乐监制|制作执行';
+  if(new RegExp('^('+kw+')[：:]').test(t)) return true;
+  if(new RegExp('^('+kw+').*?[：:]').test(t)) return true;
+  if(/^.+ - .+$/.test(t)) return true;
+  if(/^【/.test(t)) return true;
+  if(/^-+$/.test(t)) return true;
+  if(/^此歌曲为/.test(t)) return true;
+  if(/^王者荣耀\s*$/.test(t)) return true;
+  if(/^-「.*」-$/.test(t)) return true;
+  if(/有限公司/.test(t)) return true;
+  return false;
+}
+
 // Open lyrics
 function openLyrics(ai,si){
   const a=A[ai],s=a.songs[si];
@@ -1806,7 +1824,7 @@ function openLyrics(ai,si){
       if(m){
         var t=parseInt(m[1])*60+parseInt(m[2])+parseInt(m[3])/(m[3].length===2?100:1000);
         var txt=m[4].trim();
-        if(txt && !/^词[：:]/.test(txt) && !/^曲[：:]/.test(txt) && !/^编[：:]/.test(txt) && !/^制作[：:]/.test(txt) && !/^.+ - .+$/.test(txt))
+        if(!isMetaLine(txt))
           html+='<div class="ly-line" data-time="'+t.toFixed(2)+'">'+txt+'</div>';
       }
     }
@@ -1822,8 +1840,7 @@ function openLyrics(ai,si){
       for(var j=0;j<lines2.length;j++){
         var l=lines2[j].trim();
         if(!l)continue;
-        if(/^词[：:]/.test(l)||/^曲[：:]/.test(l)||/^编[：:]/.test(l)||/^制作[：:]/.test(l))continue;
-        if(/^.+ - .+$/.test(l))continue;
+        if(isMetaLine(l))continue;
         filtered.push(l);
       }
       if(filtered.length)verses.push(filtered.join('<br>'));
@@ -2053,12 +2070,13 @@ function seekAudio(e) {
 }
 
 /* ---- Progress bar drag ---- */
+var _barDragging=false;
 (function(){
   var bar=document.getElementById('abBar'), prog=document.getElementById('abProg'), dragging=false;
   function clientX(e){ return e.touches ? e.touches[0].clientX : e.clientX; }
   function startDrag(e){
     if(!audio.duration) return;
-    dragging=true; bar.classList.add('dragging');
+    dragging=true; _barDragging=true; bar.classList.add('dragging');
     moveDrag(e);
     e.preventDefault();
   }
@@ -2070,7 +2088,7 @@ function seekAudio(e) {
   }
   function endDrag(e){
     if(!dragging) return;
-    dragging=false; bar.classList.remove('dragging');
+    dragging=false; _barDragging=false; bar.classList.remove('dragging');
     var rect=bar.getBoundingClientRect();
     var cx = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
     var pct=Math.max(0,Math.min(1,(cx-rect.left)/rect.width));
@@ -2092,7 +2110,7 @@ function fmtTime(s) {
 
 audio.addEventListener('timeupdate', function() {
     if (audio.duration) {
-        document.getElementById('abProg').style.width = (audio.currentTime/audio.duration*100) + '%';
+        if(!_barDragging) document.getElementById('abProg').style.width = (audio.currentTime/audio.duration*100) + '%';
         document.getElementById('abCur').textContent = fmtTime(audio.currentTime);
         document.getElementById('abDur').textContent = fmtTime(audio.duration);
         if(document.getElementById('mo').classList.contains('on') && playTitle===lrcTitle){
